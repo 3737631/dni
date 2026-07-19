@@ -1,6 +1,15 @@
+function goFullscreen() {
+  const el = document.documentElement;
+  if (el.requestFullscreen) el.requestFullscreen();
+  else if (el.webkitRequestFullscreen) el.webkitRequestFullscreen();
+  else if (el.msRequestFullscreen) el.msRequestFullscreen();
+}
+
+document.addEventListener('click', goFullscreen, { once: true });
+document.addEventListener('touchstart', goFullscreen, { once: true });
+document.addEventListener('keydown', goFullscreen, { once: true });
+
 setTimeout(() => {
-  document.querySelectorAll('.slide').forEach(el => el.classList.remove('active'));
+  document.getElementById('slide1').classList.remove('active');
   document.getElementById('slide2').classList.add('active');
-  const hint = document.querySelector('.hint');
-  if (hint) { hint.style.transition = 'opacity 0.5s'; hint.style.opacity = '0'; setTimeout(() => hint.remove(), 500); }
 }, 1000);
