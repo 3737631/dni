@@ -48,22 +48,26 @@
     <div id="screen-choose" class="screen">
       <div class="header">
         <button class="header-btn back-btn" id="back-choose">← Atrás</button>
-        <span class="header-title">Mostrar DNI</span>
+        <span class="header-title">Mostrar tu DNI</span>
+      </div>
+      <div class="choose-desc">
+        Elige los datos que verán cuando verifiquen tu DNI. Tienes tres opciones:
       </div>
       <div class="options">
         <button class="option-card" id="opt-edad">
-          <span class="option-title">DNI Edad</span>
-          <span class="option-desc">Solo foto y mayoría de edad</span>
+          <span class="option-title">DNI edad</span>
+          <span class="option-desc">Compartirás tu foto, DNI y si eres mayor de edad.</span>
         </button>
         <button class="option-card" id="opt-simple">
-          <span class="option-title">DNI Simple</span>
-          <span class="option-desc">Nombre, apellidos, sexo, validez</span>
+          <span class="option-title">DNI simple</span>
+          <span class="option-desc">Compartirás tu foto, DNI, apellidos, nombre, fecha de nacimiento, sexo y fecha de validez del DNI.</span>
         </button>
         <button class="option-card" id="opt-completo">
-          <span class="option-title">DNI Completo</span>
-          <span class="option-desc">Todos los datos del documento</span>
+          <span class="option-title">DNI completo</span>
+          <span class="option-desc">Compartirás todos los datos de tu DNI.</span>
         </button>
       </div>
+      <div class="choose-footer">Información válida 60 segundos</div>
     </div>
 
     <!-- Pantalla QR -->
@@ -75,7 +79,7 @@
       <div class="qr-container">
         <div class="qr-box" id="qr-box"></div>
         <p class="qr-label" id="qr-label">DNI Simple</p>
-        <p class="qr-timer" id="qr-timer">Válido <span id="timer-seconds">30</span>s</p>
+        <p class="qr-timer" id="qr-timer">Válido <span id="timer-seconds">60</span>s</p>
       </div>
     </div>
 
