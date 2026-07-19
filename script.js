@@ -1,26 +1,43 @@
-const LETTERS = 'TRWAGMYFPDXBNJZSQVHLCKE';
+let current = 1;
+const total = 2;
+let autoTimer = null;
+let hintHidden = false;
 
-function validateDNI(dni) {
-  dni = dni.toUpperCase().trim();
-  if (!/^\d{8}[A-Z]$/.test(dni)) return { valid: false, msg: 'Formato inválido. Debe ser 8 dígitos + 1 letra.' };
-
-  const num = parseInt(dni.slice(0, 8), 10);
-  const letter = dni.slice(8);
-  const expected = LETTERS[num % 23];
-
-  if (letter !== expected) return { valid: false, msg: `Letra incorrecta. Debería ser: ${expected}` };
-  return { valid: true, msg: 'DNI válido' };
+function showSlide(n) {
+  document.querySelectorAll('.slide').forEach(el => el.classList.remove('active'));
+  document.getElementById('slide' + n).classList.add('active');
+  current = n;
 }
 
-const input = document.getElementById('dniInput');
-const btn = document.getElementById('checkBtn');
-const result = document.getElementById('result');
-
-function check() {
-  const res = validateDNI(input.value);
-  result.textContent = res.msg;
-  result.className = 'result ' + (res.valid ? 'valid' : 'invalid');
+function nextSlide() {
+  const next = current >= total ? 1 : current + 1;
+  showSlide(next);
 }
 
-btn.addEventListener('click', check);
-input.addEventListener('keydown', (e) => { if (e.key === 'Enter') check(); });
+function hideHint() {
+  if (!hintHidden) {
+    const hint = document.querySelector('.hint');
+    if (hint) {
+      hint.style.transition = 'opacity 0.5s';
+      hint.style.opacity = '0';
+      setTimeout(() => hint.remove(), 500);
+    }
+    hintHidden = true;
+  }
+}
+
+function advance() {
+  hideHint();
+  nextSlide();
+  resetAutoTimer();
+}
+
+function resetAutoTimer() {
+  if (autoTimer) clearInterval(autoTimer);
+  autoTimer = setInterval(nextSlide, 5000);
+}
+
+document.addEventListener('click', advance);
+document.addEventListener('keydown', advance);
+
+resetAutoTimer();
