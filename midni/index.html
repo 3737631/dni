@@ -14,10 +14,85 @@
 </head>
 <body>
   <main class="app">
-    <div class="slideshow">
-      <div class="slide active" id="slide1"></div>
-      <div class="slide" id="slide2"></div>
+
+    <!-- Pantalla principal -->
+    <div id="screen-main" class="screen active">
+      <div class="header">
+        <span class="header-title">MiDNI</span>
+        <button class="header-btn" id="btn-verify" aria-label="Verificar">Verificar</button>
+      </div>
+      <div class="dni-card">
+        <div class="dni-photo" id="dni-photo"></div>
+        <div class="dni-info">
+          <p class="dni-name" id="dni-name">—</p>
+          <p class="dni-number" id="dni-number">—</p>
+          <p class="dni-expiry" id="dni-expiry">—</p>
+        </div>
+      </div>
+      <div class="actions">
+        <button class="btn-primary" id="btn-show-dni">Mostrar mi DNI</button>
+      </div>
+      <div class="nav-bottom">
+        <button class="nav-item active" id="nav-home">
+          <span class="nav-icon">🏠</span>
+          <span>Inicio</span>
+        </button>
+        <button class="nav-item" id="nav-verify">
+          <span class="nav-icon">📷</span>
+          <span>Verificar</span>
+        </button>
+      </div>
     </div>
+
+    <!-- Pantalla elegir tipo DNI -->
+    <div id="screen-choose" class="screen">
+      <div class="header">
+        <button class="header-btn back-btn" id="back-choose">← Atrás</button>
+        <span class="header-title">Mostrar DNI</span>
+      </div>
+      <div class="options">
+        <button class="option-card" id="opt-edad">
+          <span class="option-title">DNI Edad</span>
+          <span class="option-desc">Solo foto y mayoría de edad</span>
+        </button>
+        <button class="option-card" id="opt-simple">
+          <span class="option-title">DNI Simple</span>
+          <span class="option-desc">Nombre, apellidos, sexo, validez</span>
+        </button>
+        <button class="option-card" id="opt-completo">
+          <span class="option-title">DNI Completo</span>
+          <span class="option-desc">Todos los datos del documento</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Pantalla QR -->
+    <div id="screen-qr" class="screen">
+      <div class="header">
+        <button class="header-btn back-btn" id="back-qr">← Cerrar</button>
+        <span class="header-title">Código QR</span>
+      </div>
+      <div class="qr-container">
+        <div class="qr-box" id="qr-box"></div>
+        <p class="qr-label" id="qr-label">DNI Simple</p>
+        <p class="qr-timer" id="qr-timer">Válido <span id="timer-seconds">30</span>s</p>
+      </div>
+    </div>
+
+    <!-- Pantalla Verificar -->
+    <div id="screen-verify" class="screen">
+      <div class="header">
+        <button class="header-btn back-btn" id="back-verify">← Atrás</button>
+        <span class="header-title">Verificar</span>
+      </div>
+      <div class="verify-container">
+        <div class="camera-placeholder">
+          <span class="camera-icon">📷</span>
+          <p>Apunta al código QR</p>
+        </div>
+      </div>
+    </div>
+
   </main>
   <script src="script.js"></script>
 </body>
