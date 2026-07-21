@@ -36,10 +36,10 @@ body{position:fixed;top:0;left:0;right:0;bottom:0;overscroll-behavior:none;-webk
 .hotspot-dni{left:45.6%;top:84.3%;width:46%;height:5.9%}
 
 #screen-verify .screen-inner{margin-top:calc(-6vh + 1mm)}
-#screen-edad .screen-inner{margin-top:calc(-6vh - 3mm);background:#4987f6}
-#screen-edad{background:#4987f6}
-#screen-completo .screen-inner{margin-top:calc(-6vh - 3mm);background:#4a88f7}
-#screen-completo{background:#4a88f7}
+#screen-edad .screen-inner{margin-top:calc(-6vh - 3mm);background:#4E8EF8}
+#screen-edad{background:#4E8EF8}
+#screen-completo .screen-inner{margin-top:calc(-6vh - 3mm);background:#4E8EF8}
+#screen-completo{background:#4E8EF8}
 #screen-edad .hot-verify-back,
 #screen-completo .hot-verify-back{left:auto;right:2.817%}
 
@@ -77,9 +77,9 @@ body{position:fixed;top:0;left:0;right:0;bottom:0;overscroll-behavior:none;-webk
 .qr-box{width:220px;height:220px;background:#fff;border-radius:16px;box-shadow:0 4px 20px rgba(0,0,0,.1);display:flex;align-items:center;justify-content:center;font-size:14px;color:#999}
 .qr-label{margin-top:20px;font-size:18px;font-weight:600}
 .qr-timer{margin-top:8px;font-size:14px;color:#888}
-.qr-bottom-bar{position:fixed;bottom:0;left:0;width:100vw;height:50px;background:#007aff;display:flex;align-items:center;justify-content:center;gap:48px;z-index:100}
-.qr-bar-label{font-family:'SF Pro Text',system-ui,-apple-system,sans-serif;font-size:16px;color:#fff;white-space:nowrap}
-.qr-counter{position:absolute;bottom:27px;left:50%;transform:translateX(-50%);width:28px;height:20px;display:flex;justify-content:center;align-items:center;z-index:9999;font-family:'SF Pro Text',system-ui,-apple-system,sans-serif;font-size:18px;font-weight:400;color:#fff;line-height:18px;letter-spacing:0;text-align:center;font-variant:tabular-nums;pointer-events:none;user-select:none}
+.bottom-bar{position:fixed;bottom:0;left:0;right:0;width:100%;height:66px;background:linear-gradient(90deg,#4E8EF8 0%,#5A97FA 50%,#4E8EF8 100%);border-radius:18px 18px 0 0;box-shadow:0 -1px 4px rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;gap:24px;z-index:9999;pointer-events:none}
+.bottom-bar-text{font-family:'SF Pro Text',-apple-system,BlinkMacSystemFont,system-ui,sans-serif;font-size:18px;font-weight:400;color:#fff}
+.bottom-bar-counter{font-family:'SF Pro Text',-apple-system,BlinkMacSystemFont,system-ui,sans-serif;font-size:18px;font-weight:400;color:#fff;width:30px;text-align:center;font-variant-numeric:tabular-nums;user-select:none}
 </style>
 </head>
 <body>
@@ -103,6 +103,11 @@ body{position:fixed;top:0;left:0;right:0;bottom:0;overscroll-behavior:none;-webk
     <button class="hotspot hot-verify-simple" id="vsimple" aria-label="DNI Simple"></button>
     <button class="hotspot hot-verify-completo" id="vcompleto" aria-label="DNI Completo"></button>
   </div>
+  <div class="bottom-bar">
+    <span class="bottom-bar-text">QR válido</span>
+    <span class="bottom-bar-counter" id="counter-verify">60</span>
+    <span class="bottom-bar-text">segundos.</span>
+  </div>
 </div>
 
 <!-- DNI EDAD SCREEN -->
@@ -110,7 +115,11 @@ body{position:fixed;top:0;left:0;right:0;bottom:0;overscroll-behavior:none;-webk
   <div class="screen-inner">
     <img src="https://3737631.github.io/dni/midni/photo_edad.jpg" class="screen-image" alt="" draggable="false" decoding="sync">
     <button class="hotspot hot-verify-back" id="eback" aria-label="Volver"></button>
-    <span class="qr-counter" id="counter-edad">60</span>
+  </div>
+  <div class="bottom-bar">
+    <span class="bottom-bar-text">QR válido</span>
+    <span class="bottom-bar-counter" id="counter-edad">60</span>
+    <span class="bottom-bar-text">segundos.</span>
   </div>
 </div>
 
@@ -119,7 +128,11 @@ body{position:fixed;top:0;left:0;right:0;bottom:0;overscroll-behavior:none;-webk
   <div class="screen-inner">
     <img src="https://3737631.github.io/dni/midni/photo_completo.jpg" class="screen-image" alt="" draggable="false" decoding="sync">
     <button class="hotspot hot-verify-back" id="cback" aria-label="Volver"></button>
-    <span class="qr-counter" id="counter-completo">60</span>
+  </div>
+  <div class="bottom-bar">
+    <span class="bottom-bar-text">QR válido</span>
+    <span class="bottom-bar-counter" id="counter-completo">60</span>
+    <span class="bottom-bar-text">segundos.</span>
   </div>
 </div>
 
@@ -247,9 +260,10 @@ body{position:fixed;top:0;left:0;right:0;bottom:0;overscroll-behavior:none;-webk
   btnQr.addEventListener('touchstart',function(e){e.preventDefault();pushScreen('screen-dni-choose')},{passive:false});
 
   /* ---- Hotspot: Ver mi DNI -> Verify screen ---- */
+  function openVerify(){pushScreen('screen-verify');startCounter('counter-verify')}
   var btnDni=document.getElementById('openDni');
-  btnDni.addEventListener('click',function(){pushScreen('screen-verify')});
-  btnDni.addEventListener('touchstart',function(e){e.preventDefault();pushScreen('screen-verify')},{passive:false});
+  btnDni.addEventListener('click',openVerify);
+  btnDni.addEventListener('touchstart',function(e){e.preventDefault();openVerify()},{passive:false});
 
   /* ---- Verify screen hotspots ---- */
   document.getElementById('vback').addEventListener('click',popScreen);
