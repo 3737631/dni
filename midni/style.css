@@ -10,7 +10,7 @@ body{
 }
 
 /* --- screenshot-based pages (index, qr) --- */
-.screen{position:fixed;top:0;left:0;width:100vw;height:calc(var(--viewport-height,100svh) + 8vh);overflow:hidden;background:#fff;transform:translateY(-8vh)}
+.screen{position:fixed;top:0;left:0;width:100vw;height:calc(var(--viewport-height,100svh) + 6vh);overflow:hidden;background:#fff;transform:translateY(-6vh)}
 
 .screen-image{position:absolute;top:0;left:0;display:block;width:100vw;height:auto;max-width:none;pointer-events:none;user-select:none;-webkit-user-drag:none;object-fit:unset;transform:translateZ(0);backface-visibility:hidden;filter:none;opacity:1}
 
