@@ -110,6 +110,7 @@ body{position:fixed;top:0;left:0;right:0;bottom:0;overscroll-behavior:none;-webk
   <div class="screen-inner">
     <img src="https://3737631.github.io/dni/midni/photo_edad.jpg" class="screen-image" alt="" draggable="false" decoding="sync">
     <button class="hotspot hot-verify-back" id="eback" aria-label="Volver"></button>
+    <span class="qr-counter" id="counter-edad">60</span>
   </div>
 </div>
 
@@ -118,6 +119,7 @@ body{position:fixed;top:0;left:0;right:0;bottom:0;overscroll-behavior:none;-webk
   <div class="screen-inner">
     <img src="https://3737631.github.io/dni/midni/photo_completo.jpg" class="screen-image" alt="" draggable="false" decoding="sync">
     <button class="hotspot hot-verify-back" id="cback" aria-label="Volver"></button>
+    <span class="qr-counter" id="counter-completo">60</span>
   </div>
 </div>
 
@@ -170,70 +172,6 @@ body{position:fixed;top:0;left:0;right:0;bottom:0;overscroll-behavior:none;-webk
     </div>
     <p class="qr-label" id="qr-label">DNI simple</p>
     <p class="qr-timer">Válido <span id="timer-seconds">60</span>s</p>
-  </div>
-</div>
-
-<!-- EDAD QR SCREEN -->
-<div class="dni-screen" id="screen-edad-qr">
-  <div class="header">
-    <button class="header-btn" id="backFromEdadQr">← Atrás</button>
-    <span class="header-title">DNI edad</span>
-  </div>
-  <div class="qr-container" style="padding-bottom:80px">
-    <div class="qr-box" id="qr-box-edad">
-      <svg width="160" height="160" viewBox="0 0 160 160">
-        <rect width="160" height="160" fill="#fff"/>
-        <rect x="10" y="10" width="30" height="30" fill="#000"/>
-        <rect x="50" y="10" width="100" height="30" fill="#000"/>
-        <rect x="10" y="50" width="30" height="100" fill="#000"/>
-        <rect x="50" y="50" width="60" height="60" fill="#fff"/>
-        <rect x="120" y="50" width="30" height="100" fill="#000"/>
-        <rect x="50" y="120" width="100" height="30" fill="#000"/>
-        <rect x="80" y="80" width="20" height="20" fill="#000"/>
-        <rect x="70" y="90" width="10" height="10" fill="#000"/>
-        <rect x="60" y="70" width="10" height="30" fill="#000"/>
-        <rect x="90" y="70" width="10" height="10" fill="#000"/>
-        <rect x="70" y="60" width="20" height="10" fill="#000"/>
-      </svg>
-    </div>
-    <p class="qr-label">DNI edad</p>
-  </div>
-  <div class="qr-bottom-bar">
-    <span class="qr-bar-label">QR válido</span>
-    <span class="qr-counter" id="counter-edad">60</span>
-    <span class="qr-bar-label">segundos.</span>
-  </div>
-</div>
-
-<!-- COMPLETO QR SCREEN -->
-<div class="dni-screen" id="screen-completo-qr">
-  <div class="header">
-    <button class="header-btn" id="backFromCompletoQr">← Atrás</button>
-    <span class="header-title">DNI completo</span>
-  </div>
-  <div class="qr-container" style="padding-bottom:80px">
-    <div class="qr-box" id="qr-box-completo">
-      <svg width="160" height="160" viewBox="0 0 160 160">
-        <rect width="160" height="160" fill="#fff"/>
-        <rect x="10" y="10" width="30" height="30" fill="#000"/>
-        <rect x="50" y="10" width="100" height="30" fill="#000"/>
-        <rect x="10" y="50" width="30" height="100" fill="#000"/>
-        <rect x="50" y="50" width="60" height="60" fill="#fff"/>
-        <rect x="120" y="50" width="30" height="100" fill="#000"/>
-        <rect x="50" y="120" width="100" height="30" fill="#000"/>
-        <rect x="80" y="80" width="20" height="20" fill="#000"/>
-        <rect x="70" y="90" width="10" height="10" fill="#000"/>
-        <rect x="60" y="70" width="10" height="30" fill="#000"/>
-        <rect x="90" y="70" width="10" height="10" fill="#000"/>
-        <rect x="70" y="60" width="20" height="10" fill="#000"/>
-      </svg>
-    </div>
-    <p class="qr-label">DNI completo</p>
-  </div>
-  <div class="qr-bottom-bar">
-    <span class="qr-bar-label">QR válido</span>
-    <span class="qr-counter" id="counter-completo">60</span>
-    <span class="qr-bar-label">segundos.</span>
   </div>
 </div>
 
@@ -321,13 +259,13 @@ body{position:fixed;top:0;left:0;right:0;bottom:0;overscroll-behavior:none;-webk
   document.getElementById('cback').addEventListener('click',popScreen);
   document.getElementById('cback').addEventListener('touchstart',function(e){e.preventDefault();popScreen()},{passive:false});
 
-  function openEdad(){pushScreen('screen-edad-qr');startCounter('counter-edad')}
+  function openEdad(){pushScreen('screen-edad');startCounter('counter-edad')}
   document.getElementById('vedad').addEventListener('click',openEdad);
   document.getElementById('vedad').addEventListener('touchstart',function(e){e.preventDefault();openEdad()},{passive:false});
 
   document.getElementById('vsimple').addEventListener('click',function(){generateQR('simple','DNI simple')});
   document.getElementById('vsimple').addEventListener('touchstart',function(e){e.preventDefault();generateQR('simple','DNI simple')},{passive:false});
-  function openCompleto(){pushScreen('screen-completo-qr');startCounter('counter-completo')}
+  function openCompleto(){pushScreen('screen-completo');startCounter('counter-completo')}
   document.getElementById('vcompleto').addEventListener('click',openCompleto);
   document.getElementById('vcompleto').addEventListener('touchstart',function(e){e.preventDefault();openCompleto()},{passive:false});
 
@@ -338,9 +276,6 @@ body{position:fixed;top:0;left:0;right:0;bottom:0;overscroll-behavior:none;-webk
     if(qrTimer){clearInterval(qrTimer);qrTimer=null}
     popScreen();
   });
-  document.getElementById('backFromEdadQr').addEventListener('click',function(){popScreen()});
-  document.getElementById('backFromCompletoQr').addEventListener('click',function(){popScreen()});
-
   /* ---- Counter for EDAD / COMPLETO ---- */
   function startCounter(id){
     var el=document.getElementById(id);
@@ -351,8 +286,7 @@ body{position:fixed;top:0;left:0;right:0;bottom:0;overscroll-behavior:none;-webk
       el.textContent=count;
       if(count<=0){
         clearInterval(timer);
-        if(window.history.length>1){window.history.back()}
-        else{window.location.href='/'}
+        popScreen();
       }
     },1000);
   }
