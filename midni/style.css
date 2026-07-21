@@ -83,6 +83,13 @@ body {
   height: 6.2%;
 }
 
+.boton-cerrar-menu {
+  left: 3.2%;
+  top: 9.5%;
+  width: 9.5%;
+  height: 4.2%;
+}
+
 /* Header */
 .header {
   display: flex;

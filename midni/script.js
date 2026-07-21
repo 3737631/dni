@@ -19,7 +19,11 @@ document.addEventListener('touchstart', goFullscreen, { once: true });
 
 // Invisible button handlers
 function abrirMenu() {
-  // TODO
+  showScreen('screen-menu');
+}
+
+function cerrarMenu() {
+  showScreen('screen-main');
 }
 
 function abrirQR() {
