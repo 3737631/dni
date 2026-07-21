@@ -16,9 +16,9 @@ body{
 
 .hotspot{position:absolute;z-index:50;margin:0;padding:0;border:0;outline:0;background:transparent;appearance:none;-webkit-appearance:none;pointer-events:auto;touch-action:manipulation;cursor:pointer}
 
-.hotspot-menu{left:3.1%;top:9.2%;width:10%;height:4.8%}
-.hotspot-qr{right:3.3%;top:9.1%;width:10%;height:4.8%}
-.hotspot-dni{left:45.6%;top:83.7%;width:46.2%;height:5.8%}
+.hotspot-menu{left:3.1%;top:6.9%;width:10%;height:4.8%}
+.hotspot-qr{right:3.3%;top:6.8%;width:10%;height:4.8%}
+.hotspot-dni{left:45.6%;top:62.8%;width:46.2%;height:5.8%}
 
 .menu-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.35);opacity:0;pointer-events:none;transition:opacity .32s ease;z-index:100}
 .menu-overlay.open{opacity:1;pointer-events:auto}
