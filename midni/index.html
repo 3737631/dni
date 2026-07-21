@@ -7,31 +7,40 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <title>MiDNI</title>
 <style>
-*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-html,body{width:100vw;height:100dvh;overflow:hidden;position:relative;background:#0b0b3d;-webkit-text-size-adjust:100%;overscroll-behavior:none}
-body{position:fixed;inset:0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif}
+*{box-sizing:border-box}
+html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#fff}
+body{position:fixed;inset:0;overscroll-behavior:none;-webkit-text-size-adjust:none;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif}
 
-#bg{position:fixed;top:0;left:0;width:100vw;height:100dvh;object-fit:cover;object-position:top center;z-index:1;display:block;user-select:none;pointer-events:none}
+.app-viewport{position:fixed;inset:0;overflow:hidden;background:#fff;display:flex;justify-content:center;align-items:flex-start}
 
-.hotspot{position:fixed;z-index:20;background:transparent;border:none;padding:0;margin:0;cursor:pointer;-webkit-tap-highlight-color:transparent;touch-action:manipulation;outline:2px solid red;background:rgba(255,0,0,0.12)}
-#btnMenu{top:125px;left:35px;width:75px;height:75px}
-#btnQr{top:120px;right:30px;width:80px;height:80px}
-#btnDni{top:655px;left:35px;width:calc(100vw - 70px);height:100px}
+.design-canvas{position:relative;flex:none;width:min(100vw,calc(100dvh*832/1792));height:min(100dvh,calc(100vw*1792/832));aspect-ratio:832/1792;overflow:hidden;background:#fff}
 
-.menu-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.35);opacity:0;pointer-events:none;transition:opacity .32s ease;z-index:40}
+.design-image{position:absolute;inset:0;display:block;width:100%;height:100%;object-fit:fill;object-position:0 0;pointer-events:none;user-select:none;-webkit-user-drag:none;filter:none;opacity:1;transform:none}
+
+.hotspot{position:absolute;z-index:20;padding:0;margin:0;border:0;outline:0;background:transparent;appearance:none;-webkit-appearance:none;pointer-events:auto;touch-action:manipulation;cursor:pointer;background:rgba(255,0,0,0.15);outline:2px solid red}
+
+.hotspot-menu{left:2.8%;top:8.6%;width:10.5%;height:5.5%}
+.hotspot-qr{left:83.5%;top:8.5%;width:10.5%;height:5.5%}
+.hotspot-dni{left:45.5%;top:83.5%;width:46.5%;height:6.3%}
+
+.menu-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.35);opacity:0;pointer-events:none;transition:opacity .32s ease;z-index:100}
 .menu-overlay.open{opacity:1;pointer-events:auto}
 
-.side-menu{position:fixed;top:0;left:0;width:82vw;max-width:360px;height:100dvh;transform:translateX(-100%);transition:transform .32s ease;z-index:50;background:#fff;overflow:hidden}
+.side-menu{position:fixed;top:0;left:0;width:82vw;max-width:360px;height:100dvh;transform:translateX(-100%);transition:transform .32s ease;z-index:200;background:#fff;overflow:hidden}
 .side-menu.open{transform:translateX(0)}
 .side-menu img{display:block;width:100%;height:100%;object-fit:cover;object-position:left top}
 </style>
 </head>
 <body>
-<img id="bg" src="https://3737631.github.io/dni/midni/photo2.jpg" alt="" decoding="sync" fetchpriority="high" draggable="false">
+<div class="app-viewport">
+  <div class="design-canvas" id="designCanvas">
+    <img src="https://3737631.github.io/dni/midni/photo2.jpg" class="design-image" alt="" draggable="false">
 
-<button id="btnMenu" class="hotspot" aria-label="Menú"></button>
-<button id="btnQr" class="hotspot" aria-label="QR"></button>
-<button id="btnDni" class="hotspot" aria-label="Mostrar mi DNI"></button>
+    <button id="openMenu" class="hotspot hotspot-menu" aria-label="Abrir menú"></button>
+    <button id="openQr" class="hotspot hotspot-qr" aria-label="Abrir QR"></button>
+    <button id="openDni" class="hotspot hotspot-dni" aria-label="Ver mi DNI"></button>
+  </div>
+</div>
 
 <div class="menu-overlay" id="menuOverlay"></div>
 <div class="side-menu" id="sideMenu"><img src="https://3737631.github.io/dni/midni/photo_menu.jpg" alt=""></div>
@@ -42,13 +51,13 @@ body{position:fixed;inset:0;font-family:-apple-system,BlinkMacSystemFont,'Segoe 
   var menu=document.getElementById('sideMenu');
   function openMenu(){menu.classList.add('open');overlay.classList.add('open')}
   function closeMenu(){menu.classList.remove('open');overlay.classList.remove('open')}
-  document.getElementById('btnMenu').addEventListener('click',openMenu);
-  document.getElementById('btnMenu').addEventListener('touchstart',function(e){e.preventDefault();openMenu()},{passive:false});
+  document.getElementById('openMenu').addEventListener('click',openMenu);
+  document.getElementById('openMenu').addEventListener('touchstart',function(e){e.preventDefault();openMenu()},{passive:false});
   overlay.addEventListener('click',closeMenu);
-  document.getElementById('btnQr').addEventListener('click',function(){window.location.href='./qr.html'});
-  document.getElementById('btnQr').addEventListener('touchstart',function(e){e.preventDefault();window.location.href='./qr.html'},{passive:false});
-  document.getElementById('btnDni').addEventListener('click',function(){window.location.href='./dni.html'});
-  document.getElementById('btnDni').addEventListener('touchstart',function(e){e.preventDefault();window.location.href='./dni.html'},{passive:false});
+  document.getElementById('openQr').addEventListener('click',function(){window.location.href='./qr.html'});
+  document.getElementById('openQr').addEventListener('touchstart',function(e){e.preventDefault();window.location.href='./qr.html'},{passive:false});
+  document.getElementById('openDni').addEventListener('click',function(){window.location.href='./dni.html'});
+  document.getElementById('openDni').addEventListener('touchstart',function(e){e.preventDefault();window.location.href='./dni.html'},{passive:false});
   document.addEventListener('keydown',function(e){if(e.key==='Escape')closeMenu()});
   document.addEventListener('touchmove',function(e){e.preventDefault()},{passive:false});
   document.addEventListener('wheel',function(e){e.preventDefault()},{passive:false});
