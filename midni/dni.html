@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover" />
+  <title>MiDNI - Mostrar DNI</title>
+  <link rel="manifest" href="./manifest.webmanifest" />
+  <link rel="apple-touch-icon" href="./apple-touch-icon.png" />
+  <meta name="theme-color" content="#ffffff" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  <meta name="apple-mobile-web-app-title" content="MiDNI" />
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    .dni-page { display: flex; flex-direction: column; min-height: 100dvh; }
+  </style>
+</head>
+<body>
+  <div class="dni-page" id="dniPage">
+
+    <div id="screen-choose" class="screen active">
+      <div class="header">
+        <button class="header-btn back-btn" id="back-home">← Atrás</button>
+        <span class="header-title">Mostrar tu DNI</span>
+      </div>
+      <div class="choose-desc">
+        Elige los datos que verán cuando verifiquen tu DNI. Tienes tres opciones:
+      </div>
+      <div class="options">
+        <button class="option-card" id="opt-edad">
+          <span class="option-title">DNI edad</span>
+          <span class="option-desc">Compartirás tu foto, DNI y si eres mayor de edad.</span>
+        </button>
+        <button class="option-card" id="opt-simple">
+          <span class="option-title">DNI simple</span>
+          <span class="option-desc">Compartirás tu foto, DNI, apellidos, nombre, fecha de nacimiento, sexo y fecha de validez del DNI.</span>
+        </button>
+        <button class="option-card" id="opt-completo">
+          <span class="option-title">DNI completo</span>
+          <span class="option-desc">Compartirás todos los datos de tu DNI.</span>
+        </button>
+      </div>
+      <div class="choose-footer">Información válida 60 segundos</div>
+    </div>
+
+    <div id="screen-qr" class="screen">
+      <div class="header">
+        <button class="header-btn back-btn" id="back-choose">← Atrás</button>
+        <span class="header-title">Código QR</span>
+      </div>
+      <div class="qr-container">
+        <div class="qr-box" id="qr-box">
+          <svg width="160" height="160" viewBox="0 0 160 160">
+            <rect width="160" height="160" fill="#fff"/>
+            <rect x="10" y="10" width="30" height="30" fill="#000"/>
+            <rect x="50" y="10" width="100" height="30" fill="#000"/>
+            <rect x="10" y="50" width="30" height="100" fill="#000"/>
+            <rect x="50" y="50" width="60" height="60" fill="#fff"/>
+            <rect x="120" y="50" width="30" height="100" fill="#000"/>
+            <rect x="50" y="120" width="100" height="30" fill="#000"/>
+            <rect x="80" y="80" width="20" height="20" fill="#000"/>
+            <rect x="70" y="90" width="10" height="10" fill="#000"/>
+            <rect x="60" y="70" width="10" height="30" fill="#000"/>
+            <rect x="90" y="70" width="10" height="10" fill="#000"/>
+            <rect x="70" y="60" width="20" height="10" fill="#000"/>
+          </svg>
+        </div>
+        <p class="qr-label" id="qr-label">DNI simple</p>
+        <p class="qr-timer" id="qr-timer">Válido <span id="timer-seconds">60</span>s</p>
+      </div>
+    </div>
+
+  </div>
+  <script src="dni.js"></script>
+</body>
+</html>

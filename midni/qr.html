@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover" />
+  <title>MiDNI - Verificar</title>
+  <link rel="manifest" href="./manifest.webmanifest" />
+  <link rel="apple-touch-icon" href="./apple-touch-icon.png" />
+  <meta name="theme-color" content="#ffffff" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  <meta name="apple-mobile-web-app-title" content="MiDNI" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="screen active" style="display:flex; min-height:100dvh; flex-direction:column;">
+    <div class="header">
+      <button class="header-btn back-btn" id="back-main">← Atrás</button>
+      <span class="header-title">Verificar</span>
+    </div>
+    <div class="verify-container">
+      <div class="camera-placeholder">
+        <span class="camera-icon">📷</span>
+        <p>Apunta al código QR</p>
+      </div>
+    </div>
+  </div>
+  <script>
+    document.getElementById('back-main').addEventListener('click', () => {
+      window.location.href = './index.html';
+    });
+  </script>
+</body>
+</html>
