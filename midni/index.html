@@ -95,6 +95,14 @@ body{position:fixed;top:0;left:0;right:0;bottom:0;overscroll-behavior:none;-webk
   </div>
 </div>
 
+<!-- DNI EDAD SCREEN -->
+<div class="screen" id="screen-edad">
+  <div class="screen-inner">
+    <img src="https://3737631.github.io/dni/midni/photo_edad.jpg" class="screen-image" alt="" draggable="false" decoding="sync">
+    <button class="hotspot hot-verify-back" id="eback" aria-label="Volver"></button>
+  </div>
+</div>
+
 <!-- DNI OPTIONS (native UI) -->
 <div class="dni-screen" id="screen-dni-choose">
   <div class="header">
@@ -226,14 +234,16 @@ body{position:fixed;top:0;left:0;right:0;bottom:0;overscroll-behavior:none;-webk
   /* ---- Verify screen hotspots ---- */
   document.getElementById('vback').addEventListener('click',popScreen);
   document.getElementById('vback').addEventListener('touchstart',function(e){e.preventDefault();popScreen()},{passive:false});
+  document.getElementById('eback').addEventListener('click',popScreen);
+  document.getElementById('eback').addEventListener('touchstart',function(e){e.preventDefault();popScreen()},{passive:false});
 
-  var verifyActions={edad:'DNI edad',simple:'DNI simple',completo:'DNI completo'};
-  Object.keys(verifyActions).forEach(function(k){
-    var btn=document.getElementById('v'+k);
-    var label=verifyActions[k];
-    btn.addEventListener('click',function(){generateQR(k,label)});
-    btn.addEventListener('touchstart',function(e){e.preventDefault();generateQR(k,label)},{passive:false});
-  });
+  document.getElementById('vedad').addEventListener('click',function(){pushScreen('screen-edad')});
+  document.getElementById('vedad').addEventListener('touchstart',function(e){e.preventDefault();pushScreen('screen-edad')},{passive:false});
+
+  document.getElementById('vsimple').addEventListener('click',function(){generateQR('simple','DNI simple')});
+  document.getElementById('vsimple').addEventListener('touchstart',function(e){e.preventDefault();generateQR('simple','DNI simple')},{passive:false});
+  document.getElementById('vcompleto').addEventListener('click',function(){generateQR('completo','DNI completo')});
+  document.getElementById('vcompleto').addEventListener('touchstart',function(e){e.preventDefault();generateQR('completo','DNI completo')},{passive:false});
 
   /* ---- Back (DNI options) ---- */
   document.getElementById('backFromDni').addEventListener('click',popScreen);
