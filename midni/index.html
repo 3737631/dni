@@ -59,10 +59,10 @@ body{position:fixed;inset:0;width:100%;height:100%;overscroll-behavior:none;-web
   document.getElementById('openMenu').addEventListener('click',openMenu);
   document.getElementById('openMenu').addEventListener('touchstart',function(e){e.preventDefault();openMenu()},{passive:false});
   overlay.addEventListener('click',closeMenu);
-  document.getElementById('openQr').addEventListener('click',function(){window.location.href='./qr.html'});
-  document.getElementById('openQr').addEventListener('touchstart',function(e){e.preventDefault();window.location.href='./qr.html'},{passive:false});
-  document.getElementById('openDni').addEventListener('click',function(){window.location.href='./dni.html'});
-  document.getElementById('openDni').addEventListener('touchstart',function(e){e.preventDefault();window.location.href='./dni.html'},{passive:false});
+  document.getElementById('openQr').addEventListener('click',function(){window.location.href='./dni.html'});
+  document.getElementById('openQr').addEventListener('touchstart',function(e){e.preventDefault();window.location.href='./dni.html'},{passive:false});
+  document.getElementById('openDni').addEventListener('click',function(){window.location.href='./qr.html'});
+  document.getElementById('openDni').addEventListener('touchstart',function(e){e.preventDefault();window.location.href='./qr.html'},{passive:false});
   document.addEventListener('keydown',function(e){if(e.key==='Escape')closeMenu()});
   document.addEventListener('touchmove',function(e){e.preventDefault()},{passive:false});
   document.addEventListener('wheel',function(e){e.preventDefault()},{passive:false});
