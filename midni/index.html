@@ -2,84 +2,62 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
 <title>MiDNI</title>
 <style>
-* { margin:0; padding:0; box-sizing:border-box; }
-body { background:white; font-family:-apple-system,Helvetica,Arial,sans-serif; }
-.contenedor {
-  position:relative;
-  width:100%;
-  max-width:100vw;
-  overflow:hidden;
-}
-.imagen {
-  display:block;
-  width:100%;
-  height:auto;
-  -webkit-user-select:none;
-  user-select:none;
-  -webkit-touch-callout:none;
-}
-.boton {
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:100%;min-height:100%;background:#fff;font-family:-apple-system,Helvetica,Arial,sans-serif}
+.contenedor{position:relative;width:100%}
+.contenedor::before{content:"";display:block;padding-bottom:215.49%}
+.fondo{position:absolute;inset:0;background:url(./photo2.jpg) left top/100% auto no-repeat}
+.boton{
   position:absolute;
   z-index:9999;
   cursor:pointer;
-  -webkit-tap-highlight-color:rgba(255,0,0,0.3);
-  background:rgba(255,0,0,0.35);
+  -webkit-tap-highlight-color:transparent;
+  background:rgba(255,0,0,0.3);
   border:3px solid red;
-  border-radius:6px;
+  border-radius:4px;
   padding:0;
   margin:0;
   font:inherit;
-  color:#fff;
-  font-size:14px;
-  font-weight:bold;
-  text-shadow:0 0 6px rgba(0,0,0,0.8);
+  color:red;
+  font-size:12px;
+  font-weight:700;
   display:flex;
   align-items:center;
   justify-content:center;
   outline:none;
   -webkit-appearance:none;
   appearance:none;
-  min-width:44px;
-  min-height:44px;
   touch-action:manipulation;
 }
-#btnMenu { left:2.5%; top:8.4%; width:11%; height:6%; }
-#btnQr   { right:3.5%; top:8.2%; width:11%; height:6%; }
-#btnDni  { left:45.5%; top:83.6%; width:47%; height:6.2%; }
-#btnCerrarMenu { left:2.5%; top:8.4%; width:11%; height:6%; z-index:99999; }
-.fondo-menu {
-  position:absolute; inset:0; z-index:100;
+#btnMenu{left:2.5%;top:8.4%;width:11%;height:6%}
+#btnQr{right:3.5%;top:8.2%;width:11%;height:6%}
+#btnDni{left:45.5%;top:83.6%;width:47%;height:6.2%}
+#btnCerrarMenu{left:2.5%;top:8.4%;width:11%;height:6%;z-index:99999}
+.fondo-menu{
+  position:absolute;inset:0;z-index:100;
   background:rgba(0,0,0,0.24);
-  opacity:0; visibility:hidden; pointer-events:none;
-  -webkit-transition:opacity .28s, visibility .28s;
-  transition:opacity .28s, visibility .28s;
+  opacity:0;visibility:hidden;pointer-events:none;
+  transition:opacity .28s,visibility .28s
 }
-.menu-lateral {
-  position:absolute; top:0; left:0; z-index:200;
-  width:88%; height:100%; overflow:hidden;
-  background:white;
-  -webkit-transform:translateX(-105%);
-  transform:translateX(-105%);
-  visibility:hidden;
-  -webkit-transition:-webkit-transform .34s cubic-bezier(0.22,1,0.36,1), visibility .34s;
-  transition:transform .34s cubic-bezier(0.22,1,0.36,1), visibility .34s;
-  box-shadow:10px 0 25px rgba(0,0,0,0.18);
+.menu-lateral{
+  position:absolute;top:0;left:0;z-index:200;
+  width:88%;height:100%;overflow:hidden;
+  background:#fff;
+  transform:translateX(-105%);visibility:hidden;
+  transition:transform .34s cubic-bezier(0.22,1,0.36,1),visibility .34s;
+  box-shadow:10px 0 25px rgba(0,0,0,0.18)
 }
-.menu-lateral img {
-  display:block; width:100%; height:100%;
-  -o-object-fit:cover; object-fit:cover; pointer-events:none;
-}
-.abierto .menu-lateral { -webkit-transform:translateX(0); transform:translateX(0); visibility:visible; }
-.abierto .fondo-menu { opacity:1; visibility:visible; pointer-events:auto; }
+.menu-lateral .fondo{background-image:url(./photo_menu.jpg)}
+.abierto .menu-lateral{transform:translateX(0);visibility:visible}
+.abierto .fondo-menu{opacity:1;visibility:visible;pointer-events:auto}
 </style>
 </head>
 <body>
-
 <div class="contenedor" id="app">
-  <img src="./photo2.jpg" class="imagen" alt="">
+  <div class="fondo"></div>
 
   <button class="boton" id="btnMenu">MENÚ</button>
   <button class="boton" id="btnQr">QR</button>
@@ -89,28 +67,20 @@ body { background:white; font-family:-apple-system,Helvetica,Arial,sans-serif; }
 
   <div class="menu-lateral" id="menuLateral">
     <button class="boton" id="btnCerrarMenu">←</button>
-    <img src="./photo_menu.jpg" alt="">
+    <div class="fondo"></div>
   </div>
 </div>
-
 <script>
 (function(){
-  var app = document.getElementById('app');
-
-  function tap(el, fn) {
-    el.addEventListener('click', function(e){ e.stopPropagation(); fn(e); });
-    el.addEventListener('touchstart', function(e){ e.preventDefault(); fn(e); }, {passive:false});
-  }
-
-  tap(document.getElementById('btnMenu'), function(){ app.classList.add('abierto'); });
-  tap(document.getElementById('btnCerrarMenu'), function(){ app.classList.remove('abierto'); });
-  tap(document.getElementById('fondoMenu'), function(){ app.classList.remove('abierto'); });
-  tap(document.getElementById('btnQr'), function(){ window.location.href = './qr.html'; });
-  tap(document.getElementById('btnDni'), function(){ window.location.href = './dni.html'; });
-
-  document.addEventListener('keydown', function(e){ if(e.key==='Escape') app.classList.remove('abierto'); });
+  var A=document.getElementById('app');
+  function T(e,fn){e.addEventListener('click',function(f){f.stopPropagation();fn(f)});e.addEventListener('touchstart',function(f){f.preventDefault();fn(f)},{passive:false})}
+  T(document.getElementById('btnMenu'),function(){A.classList.add('abierto')});
+  T(document.getElementById('btnCerrarMenu'),function(){A.classList.remove('abierto')});
+  T(document.getElementById('fondoMenu'),function(){A.classList.remove('abierto')});
+  T(document.getElementById('btnQr'),function(){window.location.href='./qr.html'});
+  T(document.getElementById('btnDni'),function(){window.location.href='./dni.html'});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape')A.classList.remove('abierto')});
 })();
 </script>
-
 </body>
 </html>
