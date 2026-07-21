@@ -5,65 +5,249 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="theme-color" content="#ffffff">
+<meta name="apple-mobile-web-app-title" content="MiDNI">
+<link rel="manifest" href="./manifest.webmanifest">
+<link rel="apple-touch-icon" href="./apple-touch-icon.png">
 <title>MiDNI</title>
 <style>
-*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-html,body{margin:0;padding:0;width:100%;background:#fff;overflow:hidden}
-html{height:100%}
-body{position:fixed;inset:0;width:100%;height:100%;overscroll-behavior:none;-webkit-text-size-adjust:100%;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent;-webkit-text-size-adjust:100%;margin:0;padding:0}
+html,body{width:100%;height:100%;background:#fff;overflow:hidden}
+html{position:fixed;inset:0}
+body{position:fixed;top:0;left:0;right:0;bottom:0;overscroll-behavior:none;-webkit-user-select:none;user-select:none}
 
-.screen{position:fixed;top:0;left:0;width:100vw;height:calc(var(--viewport-height,100svh) + 6vh);overflow:hidden;background:#fff;transform:translateY(-6vh)}
+/* ===== Screens (screenshot-based) ===== */
+.screen{position:fixed;top:0;left:0;width:100vw;height:100%;overflow:hidden;background:#fff;z-index:1;transform:translateX(100%);opacity:0;pointer-events:none;will-change:transform,opacity;transition:transform .35s cubic-bezier(.4,0,.2,1),opacity .3s ease}
+.screen.active{transform:translateX(0);opacity:1;pointer-events:auto}
+.screen.prev{transform:translateX(-25%);opacity:.8}
+.screen.not-active{transform:translateX(100%);opacity:0}
 
+/* Screenshot image */
 .screen-image{position:absolute;top:0;left:0;display:block;width:100vw;height:auto;max-width:none;pointer-events:none;user-select:none;-webkit-user-drag:none;object-fit:unset;transform:translateZ(0);backface-visibility:hidden;filter:none;opacity:1}
 
-.hotspot{position:absolute;z-index:50;margin:0;padding:0;border:2px solid red;outline:0;background:rgba(255,0,0,0.15);appearance:none;-webkit-appearance:none;pointer-events:auto;touch-action:manipulation;cursor:pointer}
+/* ===== Hotspots ===== */
+.hotspot{position:absolute;z-index:50;margin:0;padding:0;border:2px solid red;outline:0;background:rgba(255,0,0,.15);appearance:none;-webkit-appearance:none;pointer-events:auto;touch-action:manipulation;cursor:pointer}
+.hotspot-menu{left:3.2%;top:8.9%;width:8.8%;height:4.8%}
+.hotspot-qr{left:84.4%;top:8.8%;width:8.8%;height:4.8%}
+.hotspot-dni{left:45.6%;top:84.3%;width:46%;height:5.9%}
+.hotspot-back{left:3.2%;top:8.9%;width:8.8%;height:4.8%}
 
-.hotspot-menu{left:3.1%;top:6.9%;width:10%;height:4.8%}
-.hotspot-qr{right:3.3%;top:6.8%;width:10%;height:4.8%}
-.hotspot-dni{left:45.6%;top:62.8%;width:46.2%;height:5.8%}
-
-.menu-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.35);opacity:0;pointer-events:none;transition:opacity .32s ease;z-index:100}
+/* ===== Menu ===== */
+.menu-overlay{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.35);z-index:100;opacity:0;pointer-events:none;transition:opacity .3s ease}
 .menu-overlay.open{opacity:1;pointer-events:auto}
-
-.side-menu{position:fixed;top:0;left:0;width:82vw;max-width:360px;height:100dvh;transform:translateX(-100%);transition:transform .32s ease;z-index:200;background:#fff;overflow:hidden}
+.side-menu{position:fixed;top:0;left:0;width:82vw;max-width:360px;height:100%;z-index:200;background:#fff;overflow:hidden;transform:translateX(-100%);transition:transform .3s cubic-bezier(.4,0,.2,1)}
 .side-menu.open{transform:translateX(0)}
-.side-menu img{display:block;width:100%;height:100%;object-fit:cover;object-position:left top}
+.side-menu img{display:block;width:100%;height:100%;object-fit:cover;object-position:left top;pointer-events:none;-webkit-user-drag:none}
+
+/* ===== DNI screens (native UI) ===== */
+.dni-screen{position:fixed;top:0;left:0;width:100vw;height:100%;overflow:hidden;background:#f2f2f7;z-index:1;padding-top:env(safe-area-inset-top);padding-bottom:env(safe-area-inset-bottom);transform:translateX(100%);opacity:0;pointer-events:none;will-change:transform,opacity;transition:transform .35s cubic-bezier(.4,0,.2,1),opacity .3s ease}
+.dni-screen.active{transform:translateX(0);opacity:1;pointer-events:auto}
+.dni-screen.prev{transform:translateX(-25%);opacity:.8}
+.dni-screen.not-active{transform:translateX(100%);opacity:0}
+
+/* DNI native UI components */
+.header{display:flex;align-items:center;padding:16px 20px;background:#fff;border-bottom:1px solid #e5e5ea}
+.header-btn{background:none;border:none;font-size:16px;color:#007aff;cursor:pointer;padding:4px 8px;font-family:inherit;-webkit-appearance:none;appearance:none}
+.header-title{font-size:17px;font-weight:600;margin-left:8px}
+.choose-desc{padding:20px 20px 0;font-size:14px;color:#666;line-height:1.4}
+.options{padding:16px 20px;display:flex;flex-direction:column;gap:12px}
+.option-card{background:#fff;border:none;border-radius:14px;padding:20px;text-align:left;cursor:pointer;box-shadow:0 1px 3px rgba(0,0,0,.06);font-family:inherit;-webkit-appearance:none;appearance:none}
+.option-card:active{background:#f2f2f7}
+.option-title{display:block;font-size:17px;font-weight:600;margin-bottom:4px}
+.option-desc{display:block;font-size:13px;color:#666;line-height:1.4}
+.choose-footer{text-align:center;padding:12px 20px 28px;font-size:13px;color:#999}
+.qr-container{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:60px 20px 40px}
+.qr-box{width:220px;height:220px;background:#fff;border-radius:16px;box-shadow:0 4px 20px rgba(0,0,0,.1);display:flex;align-items:center;justify-content:center;font-size:14px;color:#999}
+.qr-label{margin-top:20px;font-size:18px;font-weight:600}
+.qr-timer{margin-top:8px;font-size:14px;color:#888}
 </style>
 </head>
 <body>
-<div class="screen" id="screen">
-  <img src="https://3737631.github.io/dni/midni/photo2.jpg" class="screen-image" alt="" draggable="false" decoding="sync" fetchpriority="high">
 
-  <button id="openMenu" class="hotspot hotspot-menu" aria-label="Abrir menú"></button>
-  <button id="openQr" class="hotspot hotspot-qr" aria-label="Abrir QR"></button>
-  <button id="openDni" class="hotspot hotspot-dni" aria-label="Ver mi DNI"></button>
+<!-- MAIN SCREEN -->
+<div class="screen active" id="screen-main">
+  <img src="https://3737631.github.io/dni/midni/photo2.jpg" class="screen-image" alt="" draggable="false" decoding="sync" fetchpriority="high">
+  <button class="hotspot hotspot-menu" id="openMenu" aria-label="Abrir menú"></button>
+  <button class="hotspot hotspot-qr" id="openQr" aria-label="Abrir QR"></button>
+  <button class="hotspot hotspot-dni" id="openDni" aria-label="Ver mi DNI"></button>
 </div>
 
+<!-- QR VERIFICATION SCREEN -->
+<div class="screen" id="screen-verify">
+  <img src="https://3737631.github.io/dni/midni/photo_verify.jpg" class="screen-image" alt="" draggable="false" decoding="sync">
+  <button class="hotspot hotspot-back" id="backFromVerify" aria-label="Volver"></button>
+</div>
+
+<!-- DNI OPTIONS (native UI) -->
+<div class="dni-screen" id="screen-dni-choose">
+  <div class="header">
+    <button class="header-btn" id="backFromDni">← Atrás</button>
+    <span class="header-title">Mostrar tu DNI</span>
+  </div>
+  <div class="choose-desc">Elige los datos que verán cuando verifiquen tu DNI. Tienes tres opciones:</div>
+  <div class="options">
+    <button class="option-card" id="opt-edad">
+      <span class="option-title">DNI edad</span>
+      <span class="option-desc">Compartirás tu foto, DNI y si eres mayor de edad.</span>
+    </button>
+    <button class="option-card" id="opt-simple">
+      <span class="option-title">DNI simple</span>
+      <span class="option-desc">Compartirás tu foto, DNI, apellidos, nombre, fecha de nacimiento, sexo y fecha de validez del DNI.</span>
+    </button>
+    <button class="option-card" id="opt-completo">
+      <span class="option-title">DNI completo</span>
+      <span class="option-desc">Compartirás todos los datos de tu DNI.</span>
+    </button>
+  </div>
+  <div class="choose-footer">Información válida 60 segundos</div>
+</div>
+
+<!-- DNI QR DISPLAY -->
+<div class="dni-screen" id="screen-dni-qr">
+  <div class="header">
+    <button class="header-btn" id="backFromQrDisplay">← Atrás</button>
+    <span class="header-title">Código QR</span>
+  </div>
+  <div class="qr-container">
+    <div class="qr-box" id="qr-box">
+      <svg width="160" height="160" viewBox="0 0 160 160">
+        <rect width="160" height="160" fill="#fff"/>
+        <rect x="10" y="10" width="30" height="30" fill="#000"/>
+        <rect x="50" y="10" width="100" height="30" fill="#000"/>
+        <rect x="10" y="50" width="30" height="100" fill="#000"/>
+        <rect x="50" y="50" width="60" height="60" fill="#fff"/>
+        <rect x="120" y="50" width="30" height="100" fill="#000"/>
+        <rect x="50" y="120" width="100" height="30" fill="#000"/>
+        <rect x="80" y="80" width="20" height="20" fill="#000"/>
+        <rect x="70" y="90" width="10" height="10" fill="#000"/>
+        <rect x="60" y="70" width="10" height="30" fill="#000"/>
+        <rect x="90" y="70" width="10" height="10" fill="#000"/>
+        <rect x="70" y="60" width="20" height="10" fill="#000"/>
+      </svg>
+    </div>
+    <p class="qr-label" id="qr-label">DNI simple</p>
+    <p class="qr-timer">Válido <span id="timer-seconds">60</span>s</p>
+  </div>
+</div>
+
+<!-- MENU OVERLAY + SIDE MENU -->
 <div class="menu-overlay" id="menuOverlay"></div>
-<div class="side-menu" id="sideMenu"><img src="https://3737631.github.io/dni/midni/photo_menu.jpg" alt=""></div>
+<div class="side-menu" id="sideMenu"><img src="https://3737631.github.io/dni/midni/photo_menu.jpg" alt="" draggable="false"></div>
 
 <script>
 (function(){
+  "use strict";
+
+  /* ---- Viewport height (fix Safari bars) ---- */
   function updateViewportHeight(){
     var h=window.visualViewport?window.visualViewport.height:window.innerHeight;
-    document.documentElement.style.setProperty('--viewport-height',Math.round(h)+'px')
+    document.documentElement.style.setProperty('--viewport-height',Math.round(h)+'px');
+    document.body.style.height=Math.round(h)+'px';
   }
   updateViewportHeight();
   window.addEventListener('resize',updateViewportHeight);
   if(window.visualViewport)window.visualViewport.addEventListener('resize',updateViewportHeight);
 
+  /* ---- Navigation (push/pop with slide transitions) ---- */
+  var navStack=[];
+
+  function pushScreen(id){
+    var cur=document.querySelector('.screen.active, .dni-screen.active');
+    var next=document.getElementById(id);
+    if(!next||next===cur)return;
+    if(cur){
+      cur.classList.remove('active');
+      cur.classList.add('prev');
+      navStack.push(cur.id);
+    }
+    next.classList.remove('prev');
+    next.classList.add('active');
+  }
+
+  function popScreen(){
+    if(navStack.length===0)return;
+    var cur=document.querySelector('.screen.active, .dni-screen.active');
+    var prevId=navStack.pop();
+    var prev=document.getElementById(prevId);
+    if(!prev)return;
+    cur.classList.remove('active');
+    /* slides to translateX(100%) via base class */
+    prev.classList.remove('prev');
+    prev.classList.add('active');
+  }
+
+  /* ---- Menu ---- */
   var overlay=document.getElementById('menuOverlay');
-  var menu=document.getElementById('sideMenu');
-  function openMenu(){menu.classList.add('open');overlay.classList.add('open')}
-  function closeMenu(){menu.classList.remove('open');overlay.classList.remove('open')}
-  document.getElementById('openMenu').addEventListener('click',openMenu);
-  document.getElementById('openMenu').addEventListener('touchstart',function(e){e.preventDefault();openMenu()},{passive:false});
+  var sideMenu=document.getElementById('sideMenu');
+
+  function openMenu(){
+    sideMenu.classList.add('open');
+    overlay.classList.add('open');
+  }
+  function closeMenu(){
+    sideMenu.classList.remove('open');
+    overlay.classList.remove('open');
+  }
+
   overlay.addEventListener('click',closeMenu);
-  document.getElementById('openQr').addEventListener('click',function(){window.location.href='./dni.html'});
-  document.getElementById('openQr').addEventListener('touchstart',function(e){e.preventDefault();window.location.href='./dni.html'},{passive:false});
-  document.getElementById('openDni').addEventListener('click',function(){window.location.href='./qr.html'});
-  document.getElementById('openDni').addEventListener('touchstart',function(e){e.preventDefault();window.location.href='./qr.html'},{passive:false});
   document.addEventListener('keydown',function(e){if(e.key==='Escape')closeMenu()});
+
+  /* ---- Hotspot: Menu ---- */
+  var btnMenu=document.getElementById('openMenu');
+  btnMenu.addEventListener('click',openMenu);
+  btnMenu.addEventListener('touchstart',function(e){e.preventDefault();openMenu()},{passive:false});
+
+  /* ---- Hotspot: QR button -> DNI options ---- */
+  var btnQr=document.getElementById('openQr');
+  btnQr.addEventListener('click',function(){pushScreen('screen-dni-choose')});
+  btnQr.addEventListener('touchstart',function(e){e.preventDefault();pushScreen('screen-dni-choose')},{passive:false});
+
+  /* ---- Hotspot: Ver mi DNI -> Verify screen ---- */
+  var btnDni=document.getElementById('openDni');
+  btnDni.addEventListener('click',function(){pushScreen('screen-verify')});
+  btnDni.addEventListener('touchstart',function(e){e.preventDefault();pushScreen('screen-verify')},{passive:false});
+
+  /* ---- Back buttons ---- */
+  document.getElementById('backFromVerify').addEventListener('click',popScreen);
+  document.getElementById('backFromVerify').addEventListener('touchstart',function(e){e.preventDefault();popScreen()},{passive:false});
+  document.getElementById('backFromDni').addEventListener('click',popScreen);
+
+  document.getElementById('backFromQrDisplay').addEventListener('click',function(){
+    if(qrTimer){clearInterval(qrTimer);qrTimer=null}
+    popScreen();
+  });
+
+  /* ---- QR generation and timer ---- */
+  var qrTimer=null;
+  var secondsLeft=60;
+
+  function generateQR(type,label){
+    document.getElementById('qr-label').textContent=label;
+    secondsLeft=60;
+    document.getElementById('timer-seconds').textContent='60';
+
+    if(qrTimer){clearInterval(qrTimer);qrTimer=null}
+
+    var box=document.getElementById('qr-box');
+    box.innerHTML='<svg width="160" height="160" viewBox="0 0 160 160"><rect width="160" height="160" fill="#fff"/><rect x="10" y="10" width="30" height="30" fill="#000"/><rect x="50" y="10" width="100" height="30" fill="#000"/><rect x="10" y="50" width="30" height="100" fill="#000"/><rect x="50" y="50" width="60" height="60" fill="#fff"/><rect x="120" y="50" width="30" height="100" fill="#000"/><rect x="50" y="120" width="100" height="30" fill="#000"/><rect x="80" y="80" width="20" height="20" fill="#000"/><rect x="70" y="90" width="10" height="10" fill="#000"/><rect x="60" y="70" width="10" height="30" fill="#000"/><rect x="90" y="70" width="10" height="10" fill="#000"/><rect x="70" y="60" width="20" height="10" fill="#000"/></svg>';
+
+    qrTimer=setInterval(function(){
+      secondsLeft--;
+      document.getElementById('timer-seconds').textContent=secondsLeft;
+      if(secondsLeft<=0){
+        clearInterval(qrTimer);qrTimer=null;
+        box.innerHTML='<span style="color:#999">C\u00f3digo expirado</span>';
+      }
+    },1000);
+
+    pushScreen('screen-dni-qr');
+  }
+
+  document.getElementById('opt-edad').addEventListener('click',function(){generateQR('edad','DNI edad')});
+  document.getElementById('opt-simple').addEventListener('click',function(){generateQR('simple','DNI simple')});
+  document.getElementById('opt-completo').addEventListener('click',function(){generateQR('completo','DNI completo')});
+
+  /* ---- Prevent scroll/bounce/zoom ---- */
   document.addEventListener('touchmove',function(e){e.preventDefault()},{passive:false});
   document.addEventListener('wheel',function(e){e.preventDefault()},{passive:false});
 })();
