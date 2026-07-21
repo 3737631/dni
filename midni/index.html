@@ -77,6 +77,9 @@ body{position:fixed;top:0;left:0;right:0;bottom:0;overscroll-behavior:none;-webk
 .qr-box{width:220px;height:220px;background:#fff;border-radius:16px;box-shadow:0 4px 20px rgba(0,0,0,.1);display:flex;align-items:center;justify-content:center;font-size:14px;color:#999}
 .qr-label{margin-top:20px;font-size:18px;font-weight:600}
 .qr-timer{margin-top:8px;font-size:14px;color:#888}
+.qr-bottom-bar{position:fixed;bottom:0;left:0;width:100vw;height:50px;background:#007aff;display:flex;align-items:center;justify-content:center;gap:48px;z-index:100}
+.qr-bar-label{font-family:'SF Pro Text',system-ui,-apple-system,sans-serif;font-size:16px;color:#fff;white-space:nowrap}
+.qr-counter{position:absolute;bottom:27px;left:50%;transform:translateX(-50%);width:28px;height:20px;display:flex;justify-content:center;align-items:center;z-index:9999;font-family:'SF Pro Text',system-ui,-apple-system,sans-serif;font-size:18px;font-weight:400;color:#fff;line-height:18px;letter-spacing:0;text-align:center;font-variant:tabular-nums;pointer-events:none;user-select:none}
 </style>
 </head>
 <body>
@@ -170,6 +173,70 @@ body{position:fixed;top:0;left:0;right:0;bottom:0;overscroll-behavior:none;-webk
   </div>
 </div>
 
+<!-- EDAD QR SCREEN -->
+<div class="dni-screen" id="screen-edad-qr">
+  <div class="header">
+    <button class="header-btn" id="backFromEdadQr">← Atrás</button>
+    <span class="header-title">DNI edad</span>
+  </div>
+  <div class="qr-container" style="padding-bottom:80px">
+    <div class="qr-box" id="qr-box-edad">
+      <svg width="160" height="160" viewBox="0 0 160 160">
+        <rect width="160" height="160" fill="#fff"/>
+        <rect x="10" y="10" width="30" height="30" fill="#000"/>
+        <rect x="50" y="10" width="100" height="30" fill="#000"/>
+        <rect x="10" y="50" width="30" height="100" fill="#000"/>
+        <rect x="50" y="50" width="60" height="60" fill="#fff"/>
+        <rect x="120" y="50" width="30" height="100" fill="#000"/>
+        <rect x="50" y="120" width="100" height="30" fill="#000"/>
+        <rect x="80" y="80" width="20" height="20" fill="#000"/>
+        <rect x="70" y="90" width="10" height="10" fill="#000"/>
+        <rect x="60" y="70" width="10" height="30" fill="#000"/>
+        <rect x="90" y="70" width="10" height="10" fill="#000"/>
+        <rect x="70" y="60" width="20" height="10" fill="#000"/>
+      </svg>
+    </div>
+    <p class="qr-label">DNI edad</p>
+  </div>
+  <div class="qr-bottom-bar">
+    <span class="qr-bar-label">QR válido</span>
+    <span class="qr-counter" id="counter-edad">60</span>
+    <span class="qr-bar-label">segundos.</span>
+  </div>
+</div>
+
+<!-- COMPLETO QR SCREEN -->
+<div class="dni-screen" id="screen-completo-qr">
+  <div class="header">
+    <button class="header-btn" id="backFromCompletoQr">← Atrás</button>
+    <span class="header-title">DNI completo</span>
+  </div>
+  <div class="qr-container" style="padding-bottom:80px">
+    <div class="qr-box" id="qr-box-completo">
+      <svg width="160" height="160" viewBox="0 0 160 160">
+        <rect width="160" height="160" fill="#fff"/>
+        <rect x="10" y="10" width="30" height="30" fill="#000"/>
+        <rect x="50" y="10" width="100" height="30" fill="#000"/>
+        <rect x="10" y="50" width="30" height="100" fill="#000"/>
+        <rect x="50" y="50" width="60" height="60" fill="#fff"/>
+        <rect x="120" y="50" width="30" height="100" fill="#000"/>
+        <rect x="50" y="120" width="100" height="30" fill="#000"/>
+        <rect x="80" y="80" width="20" height="20" fill="#000"/>
+        <rect x="70" y="90" width="10" height="10" fill="#000"/>
+        <rect x="60" y="70" width="10" height="30" fill="#000"/>
+        <rect x="90" y="70" width="10" height="10" fill="#000"/>
+        <rect x="70" y="60" width="20" height="10" fill="#000"/>
+      </svg>
+    </div>
+    <p class="qr-label">DNI completo</p>
+  </div>
+  <div class="qr-bottom-bar">
+    <span class="qr-bar-label">QR válido</span>
+    <span class="qr-counter" id="counter-completo">60</span>
+    <span class="qr-bar-label">segundos.</span>
+  </div>
+</div>
+
 <!-- MENU OVERLAY + SIDE MENU -->
 <div class="menu-overlay" id="menuOverlay"></div>
 <div class="side-menu" id="sideMenu"><img src="https://3737631.github.io/dni/midni/photo_menu.jpg" alt="" draggable="false"></div>
@@ -254,13 +321,15 @@ body{position:fixed;top:0;left:0;right:0;bottom:0;overscroll-behavior:none;-webk
   document.getElementById('cback').addEventListener('click',popScreen);
   document.getElementById('cback').addEventListener('touchstart',function(e){e.preventDefault();popScreen()},{passive:false});
 
-  document.getElementById('vedad').addEventListener('click',function(){pushScreen('screen-edad')});
-  document.getElementById('vedad').addEventListener('touchstart',function(e){e.preventDefault();pushScreen('screen-edad')},{passive:false});
+  function openEdad(){pushScreen('screen-edad-qr');startCounter('counter-edad')}
+  document.getElementById('vedad').addEventListener('click',openEdad);
+  document.getElementById('vedad').addEventListener('touchstart',function(e){e.preventDefault();openEdad()},{passive:false});
 
   document.getElementById('vsimple').addEventListener('click',function(){generateQR('simple','DNI simple')});
   document.getElementById('vsimple').addEventListener('touchstart',function(e){e.preventDefault();generateQR('simple','DNI simple')},{passive:false});
-document.getElementById('vcompleto').addEventListener('click',function(){pushScreen('screen-completo')});
-document.getElementById('vcompleto').addEventListener('touchstart',function(e){e.preventDefault();pushScreen('screen-completo')},{passive:false});
+  function openCompleto(){pushScreen('screen-completo-qr');startCounter('counter-completo')}
+  document.getElementById('vcompleto').addEventListener('click',openCompleto);
+  document.getElementById('vcompleto').addEventListener('touchstart',function(e){e.preventDefault();openCompleto()},{passive:false});
 
   /* ---- Back (DNI options) ---- */
   document.getElementById('backFromDni').addEventListener('click',popScreen);
@@ -269,8 +338,26 @@ document.getElementById('vcompleto').addEventListener('touchstart',function(e){e
     if(qrTimer){clearInterval(qrTimer);qrTimer=null}
     popScreen();
   });
+  document.getElementById('backFromEdadQr').addEventListener('click',function(){popScreen()});
+  document.getElementById('backFromCompletoQr').addEventListener('click',function(){popScreen()});
 
-  /* ---- QR generation and timer ---- */
+  /* ---- Counter for EDAD / COMPLETO ---- */
+  function startCounter(id){
+    var el=document.getElementById(id);
+    var count=60;
+    el.textContent=count;
+    var timer=setInterval(function(){
+      count--;
+      el.textContent=count;
+      if(count<=0){
+        clearInterval(timer);
+        if(window.history.length>1){window.history.back()}
+        else{window.location.href='/'}
+      }
+    },1000);
+  }
+
+  /* ---- QR generation and timer (for SIMPLE only) ---- */
   var qrTimer=null;
   var secondsLeft=60;
 
@@ -296,9 +383,9 @@ document.getElementById('vcompleto').addEventListener('touchstart',function(e){e
     pushScreen('screen-dni-qr');
   }
 
-  document.getElementById('opt-edad').addEventListener('click',function(){generateQR('edad','DNI edad')});
+  document.getElementById('opt-edad').addEventListener('click',openEdad);
   document.getElementById('opt-simple').addEventListener('click',function(){generateQR('simple','DNI simple')});
-  document.getElementById('opt-completo').addEventListener('click',function(){generateQR('completo','DNI completo')});
+  document.getElementById('opt-completo').addEventListener('click',openCompleto);
 
   /* ---- Prevent scroll/bounce/zoom ---- */
   document.addEventListener('touchmove',function(e){e.preventDefault()},{passive:false});
