@@ -10,6 +10,12 @@
 <link rel="manifest" href="./manifest.webmanifest">
 <link rel="apple-touch-icon" href="./apple-touch-icon.png">
 <title>MiDNI</title>
+<svg style="position:absolute;width:0;height:0" aria-hidden="true">
+  <filter id="sharpen" x="-5%" y="-5%" width="110%" height="110%">
+    <feGaussianBlur in="SourceGraphic" stdDeviation="0.3" result="blur"/>
+    <feComposite in="SourceGraphic" in2="blur" operator="arithmetic" k1="0" k2="1.4" k3="-0.4" k4="0"/>
+  </filter>
+</svg>
 <style>
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;-webkit-text-size-adjust:100%;margin:0;padding:0}
 html,body{width:100%;height:100%;background:#fff;overflow:hidden}
@@ -25,7 +31,7 @@ body{position:fixed;top:0;left:0;right:0;bottom:0;overscroll-behavior:none;-webk
 .screen-inner{position:relative;margin-top:-6vh;left:0;width:100vw;height:calc(100% + 6vh);overflow:hidden}
 
 /* Screenshot image */
-.screen-image{position:absolute;top:0;left:0;display:block;width:100vw;height:auto;max-width:none;pointer-events:none;user-select:none;-webkit-user-drag:none;object-fit:unset;transform:translateZ(0);backface-visibility:hidden;filter:none;opacity:1}
+.screen-image{position:absolute;top:0;left:0;display:block;width:100vw;height:auto;max-width:none;pointer-events:none;user-select:none;-webkit-user-drag:none;object-fit:unset;transform:translateZ(0);backface-visibility:hidden;filter:url(#sharpen);opacity:1}
 
 /* ===== Hotspots (shared) ===== */
 .hotspot{position:absolute;z-index:50;margin:0;padding:0;border:0;outline:0;background:transparent;appearance:none;-webkit-appearance:none;pointer-events:auto;touch-action:manipulation;cursor:pointer}
@@ -36,8 +42,7 @@ body{position:fixed;top:0;left:0;right:0;bottom:0;overscroll-behavior:none;-webk
 .hotspot-dni{left:45.6%;top:84.3%;width:46%;height:5.9%}
 
 #screen-verify .screen-inner{margin-top:calc(-6vh + 1mm)}
-#screen-edad .screen-inner{margin-top:0;height:auto;overflow:visible}
-#screen-edad .screen-image{position:relative;display:block}
+#screen-edad .screen-inner{margin-top:calc(-6vh - 1mm)}
 
 /* Verify screen hotspots (710x1536 design canvas) - RED for testing */
 .hot-verify-back{left:2.817%;top:7.617%;width:7.183%;height:3.516%;background:rgba(255,0,0,.15);outline:2px solid red}
@@ -50,7 +55,7 @@ body{position:fixed;top:0;left:0;right:0;bottom:0;overscroll-behavior:none;-webk
 .menu-overlay.open{opacity:1;pointer-events:auto}
 .side-menu{position:fixed;top:0;left:0;width:82vw;max-width:360px;height:100%;z-index:200;background:#fff;overflow:hidden;transform:translateX(-100%);transition:transform .3s cubic-bezier(.4,0,.2,1)}
 .side-menu.open{transform:translateX(0)}
-.side-menu img{display:block;width:100%;height:100%;object-fit:cover;object-position:left top;pointer-events:none;-webkit-user-drag:none}
+.side-menu img{display:block;width:100%;height:100%;object-fit:cover;object-position:left top;pointer-events:none;-webkit-user-drag:none;filter:url(#sharpen)}
 
 /* ===== DNI screens (native UI) ===== */
 .dni-screen{position:fixed;top:0;left:0;width:100vw;height:var(--viewport-height,100%);overflow:hidden;background:#f2f2f7;z-index:1;padding-top:env(safe-area-inset-top);padding-bottom:env(safe-area-inset-bottom);transform:translateX(100%);opacity:0;pointer-events:none;will-change:transform,opacity;transition:transform .35s cubic-bezier(.4,0,.2,1),opacity .3s ease}
