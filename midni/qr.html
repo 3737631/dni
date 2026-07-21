@@ -1,34 +1,30 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover" />
-  <title>MiDNI - Verificar</title>
-  <link rel="manifest" href="./manifest.webmanifest" />
-  <link rel="apple-touch-icon" href="./apple-touch-icon.png" />
-  <meta name="theme-color" content="#ffffff" />
-  <meta name="apple-mobile-web-app-capable" content="yes" />
-  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
-  <meta name="apple-mobile-web-app-title" content="MiDNI" />
-  <link rel="stylesheet" href="style.css" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<title>MiDNI - QR</title>
+<style>
+html,body{margin:0;padding:0;width:100%;height:100%;overflow:hidden;background:#fff}
+body{position:fixed;inset:0;overscroll-behavior:none;-webkit-text-size-adjust:100%;font-family:-apple-system,Helvetica,Arial,sans-serif}
+.app-screen{position:fixed;inset:0;width:100vw;height:100dvh;overflow:hidden;background:#fff}
+.screen-image{position:absolute;inset:0;display:block;width:100%;height:100%;object-fit:cover;object-position:center top;user-select:none;pointer-events:none;-webkit-user-drag:none}
+.hotspot{position:absolute;z-index:20;margin:0;padding:0;border:0;background:transparent;outline:none;cursor:pointer;touch-action:manipulation;-webkit-appearance:none;appearance:none}
+#back{left:8%;top:9%;width:12%;height:7%}
+</style>
 </head>
 <body>
-  <div class="screen active" style="display:flex; min-height:100dvh; flex-direction:column;">
-    <div class="header">
-      <button class="header-btn back-btn" id="back-main">← Atrás</button>
-      <span class="header-title">Verificar</span>
-    </div>
-    <div class="verify-container">
-      <div class="camera-placeholder">
-        <span class="camera-icon">📷</span>
-        <p>Apunta al código QR</p>
-      </div>
-    </div>
-  </div>
-  <script>
-    document.getElementById('back-main').addEventListener('click', () => {
-      window.location.href = './index.html';
-    });
-  </script>
+<div class="app-screen">
+  <img src="https://3737631.github.io/dni/midni/photo_dni.jpg" class="screen-image" alt="">
+  <button id="back" class="hotspot" aria-label="Volver"></button>
+</div>
+<script>
+document.getElementById('back').addEventListener('click',function(){window.location.href='./index.html'});
+document.getElementById('back').addEventListener('touchstart',function(e){e.preventDefault();window.location.href='./index.html'},{passive:false});
+document.addEventListener('touchmove',function(e){e.preventDefault()},{passive:false});
+document.addEventListener('wheel',function(e){e.preventDefault()},{passive:false});
+</script>
 </body>
 </html>
