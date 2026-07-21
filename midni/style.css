@@ -14,7 +14,7 @@ body{
 
 .screen-image{position:absolute;top:0;left:0;display:block;width:100vw;height:auto;max-width:none;pointer-events:none;user-select:none;-webkit-user-drag:none;object-fit:unset;transform:translateZ(0);backface-visibility:hidden;filter:none;opacity:1}
 
-.hotspot{position:absolute;z-index:50;margin:0;padding:0;border:0;outline:0;background:transparent;appearance:none;-webkit-appearance:none;pointer-events:auto;touch-action:manipulation;cursor:pointer}
+.hotspot{position:absolute;z-index:50;margin:0;padding:0;border:2px solid red;outline:0;background:rgba(255,0,0,0.15);appearance:none;-webkit-appearance:none;pointer-events:auto;touch-action:manipulation;cursor:pointer}
 
 .hotspot-menu{left:3.1%;top:6.9%;width:10%;height:4.8%}
 .hotspot-qr{right:3.3%;top:6.8%;width:10%;height:4.8%}
