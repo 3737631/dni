@@ -10,33 +10,34 @@ document.addEventListener("DOMContentLoaded", () => {
     return;
   }
 
-  openMenu.addEventListener("click", (event) => {
-    event.preventDefault();
+  const tap = (el, fn) => {
+    el.addEventListener("click", fn);
+    el.addEventListener("touchend", (e) => { e.preventDefault(); fn(e); });
+  };
+
+  tap(openMenu, (event) => {
     event.stopPropagation();
     dniScreen.classList.add("menu-open");
   });
 
   const closeMenu = document.getElementById("closeMenu");
   if (closeMenu) {
-    closeMenu.addEventListener("click", (event) => {
-      event.preventDefault();
+    tap(closeMenu, (event) => {
       event.stopPropagation();
       dniScreen.classList.remove("menu-open");
     });
   }
 
-  menuBackdrop.addEventListener("click", () => {
+  tap(menuBackdrop, () => {
     dniScreen.classList.remove("menu-open");
   });
 
-  openQr.addEventListener("click", (event) => {
-    event.preventDefault();
+  tap(openQr, (event) => {
     event.stopPropagation();
     window.location.href = "./qr.html";
   });
 
-  openDni.addEventListener("click", (event) => {
-    event.preventDefault();
+  tap(openDni, (event) => {
     event.stopPropagation();
     window.location.href = "./dni.html";
   });

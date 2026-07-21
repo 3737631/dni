@@ -22,31 +22,24 @@
     draggable="false"
   >
 
-  <button
-    type="button"
-    class="hotspot hotspot-menu"
-    id="openMenu"
-    aria-label="Abrir menú">
-  </button>
+  <div class="hotspot hotspot-menu" id="openMenu" role="button" tabindex="0">
+    <span class="hotspot-label">☰ Menú</span>
+  </div>
 
-  <button
-    type="button"
-    class="hotspot hotspot-qr"
-    id="openQr"
-    aria-label="Abrir QR">
-  </button>
+  <div class="hotspot hotspot-qr" id="openQr" role="button" tabindex="0">
+    <span class="hotspot-label">📷 QR</span>
+  </div>
 
-  <button
-    type="button"
-    class="hotspot hotspot-dni"
-    id="openDni"
-    aria-label="Ver mi DNI">
-  </button>
+  <div class="hotspot hotspot-dni" id="openDni" role="button" tabindex="0">
+    <span class="hotspot-label">🪪 Ver mi DNI</span>
+  </div>
 
   <div class="menu-backdrop" id="menuBackdrop"></div>
 
   <aside class="side-menu" id="sideMenu">
-    <button type="button" class="hotspot hotspot-close-menu" id="closeMenu" aria-label="Cerrar menú"></button>
+    <div class="hotspot hotspot-close-menu" id="closeMenu" role="button" tabindex="0">
+      <span class="hotspot-label">← Cerrar</span>
+    </div>
     <img
       src="./photo_menu.jpg"
       class="menu-image"
