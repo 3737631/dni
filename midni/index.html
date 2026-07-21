@@ -20,27 +20,26 @@ body{position:fixed;top:0;left:0;right:0;bottom:0;overscroll-behavior:none;-webk
 .screen{position:fixed;top:0;left:0;width:100vw;height:var(--viewport-height,100%);overflow:hidden;background:#fff;z-index:1;transform:translateX(100%);opacity:0;pointer-events:none;will-change:transform,opacity;transition:transform .35s cubic-bezier(.4,0,.2,1),opacity .3s ease}
 .screen.active{transform:translateX(0);opacity:1;pointer-events:auto}
 .screen.prev{transform:translateX(-25%);opacity:.8}
-.screen.not-active{transform:translateX(100%);opacity:0}
 
 /* Wrapper inside screen that shifts image+hotspots up (matches original position) */
-.screen-inner{position:absolute;top:-6vh;left:0;width:100vw;height:calc(100% + 6vh);overflow:hidden}
-#screen-verify .screen-inner{top:calc(-6vh + .15cm)}
+.screen-inner{position:relative;margin-top:-6vh;left:0;width:100vw;height:calc(100% + 6vh);overflow:hidden}
 
 /* Screenshot image */
 .screen-image{position:absolute;top:0;left:0;display:block;width:100vw;height:auto;max-width:none;pointer-events:none;user-select:none;-webkit-user-drag:none;object-fit:unset;transform:translateZ(0);backface-visibility:hidden;filter:none;opacity:1}
 
-/* ===== Hotspots ===== */
-.hotspot{position:absolute;z-index:50;margin:0;padding:0;border:2px solid red;outline:0;background:rgba(255,0,0,.15);appearance:none;-webkit-appearance:none;pointer-events:auto;touch-action:manipulation;cursor:pointer}
+/* ===== Hotspots (shared) ===== */
+.hotspot{position:absolute;z-index:50;margin:0;padding:0;border:0;outline:0;background:transparent;appearance:none;-webkit-appearance:none;pointer-events:auto;touch-action:manipulation;cursor:pointer}
+
+/* Main screen hotspots */
 .hotspot-menu{left:3.2%;top:8.9%;width:8.8%;height:4.8%}
 .hotspot-qr{left:84.4%;top:8.8%;width:8.8%;height:4.8%}
 .hotspot-dni{left:45.6%;top:84.3%;width:46%;height:5.9%}
-.hotspot-back{left:3.2%;top:8.9%;width:8.8%;height:4.8%}
 
-/* Verify screen hotspots (from 832x1792 design canvas) */
-.hot-verify-back{left:2.644%;top:7.366%;width:7.452%;height:3.46%}
-.hot-verify-edad{left:9.856%;top:39.342%;width:64.904%;height:8.371%}
-.hot-verify-simple{left:9.856%;top:49.219%;width:64.904%;height:8.371%}
-.hot-verify-completo{left:9.856%;top:59.263%;width:64.904%;height:8.371%}
+/* Verify screen hotspots (710x1536 design canvas) - RED for testing */
+.hot-verify-back{left:2.817%;top:7.617%;width:7.183%;height:3.516%;background:rgba(255,0,0,.15);outline:2px solid red}
+.hot-verify-edad{left:12.254%;top:47.721%;width:75.493%;height:12.174%;background:rgba(255,0,0,.15);outline:2px solid red}
+.hot-verify-simple{left:12.254%;top:61.393%;width:75.493%;height:17.253%;background:rgba(255,0,0,.15);outline:2px solid red}
+.hot-verify-completo{left:12.254%;top:80.143%;width:75.493%;height:12.76%;background:rgba(255,0,0,.15);outline:2px solid red}
 
 /* ===== Menu ===== */
 .menu-overlay{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.35);z-index:100;opacity:0;pointer-events:none;transition:opacity .3s ease}
@@ -53,7 +52,6 @@ body{position:fixed;top:0;left:0;right:0;bottom:0;overscroll-behavior:none;-webk
 .dni-screen{position:fixed;top:0;left:0;width:100vw;height:var(--viewport-height,100%);overflow:hidden;background:#f2f2f7;z-index:1;padding-top:env(safe-area-inset-top);padding-bottom:env(safe-area-inset-bottom);transform:translateX(100%);opacity:0;pointer-events:none;will-change:transform,opacity;transition:transform .35s cubic-bezier(.4,0,.2,1),opacity .3s ease}
 .dni-screen.active{transform:translateX(0);opacity:1;pointer-events:auto}
 .dni-screen.prev{transform:translateX(-25%);opacity:.8}
-.dni-screen.not-active{transform:translateX(100%);opacity:0}
 
 /* DNI native UI components */
 .header{display:flex;align-items:center;padding:16px 20px;background:#fff;border-bottom:1px solid #e5e5ea}
