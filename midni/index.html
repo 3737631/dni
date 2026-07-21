@@ -13,11 +13,21 @@ html,body{width:100%;min-height:100%;background:#fff;overflow:hidden;font-family
 #m{left:2.5%;top:8.4%;width:11%;height:6%}
 #q{right:3.5%;top:8.2%;width:11%;height:6%}
 #d{left:45.5%;top:83.6%;width:47%;height:6.2%}
+
+/* Overlay base */
+.overlay{position:absolute;inset:0;z-index:300;opacity:0;visibility:hidden;pointer-events:none;transition:opacity .25s,visibility .25s}
+#app.dni-abierto #dni-over{opacity:1;visibility:visible;pointer-events:auto}
+
+/* Menu */
 #fondo{position:absolute;inset:0;z-index:100;background:rgba(0,0,0,0.25);opacity:0;visibility:hidden;pointer-events:none;transition:opacity .25s,visibility .25s}
-#app.abierto #fondo{opacity:1;visibility:visible;pointer-events:auto}
+#app.menu-abierto #fondo{opacity:1;visibility:visible;pointer-events:auto}
 #menu{position:absolute;top:0;left:0;z-index:200;width:88%;height:100%;overflow:hidden;background:#fff;transform:translateX(-105%);visibility:hidden;transition:transform .3s cubic-bezier(0.22,1,0.36,1),visibility .3s;box-shadow:8px 0 20px rgba(0,0,0,0.15)}
-#app.abierto #menu{transform:translateX(0);visibility:visible}
-#menu>div:first-child{width:100%;padding-bottom:216.22%;background:url(https://3737631.github.io/dni/midni/photo_menu.jpg) center 20% / 100% auto no-repeat}
+#app.menu-abierto #menu{transform:translateX(0);visibility:visible}
+#menu>div:first-child{width:100%;padding-bottom:216.22%;background:url(https://3737631.github.io/dni/midni/photo_menu.jpg) center / 100% auto no-repeat}
+
+/* Ver DNI overlay */
+#dni-over{background:#fff}
+#dni-over>div:first-child{width:100%;padding-bottom:216.95%;background:url(https://3737631.github.io/dni/midni/photo_dni.jpg) center / 100% auto no-repeat}
 </style>
 </head>
 <body>
@@ -27,20 +37,24 @@ html,body{width:100%;min-height:100%;background:#fff;overflow:hidden;font-family
   <button class="b" id="m">MENÚ</button>
   <button class="b" id="q">QR</button>
   <button class="b" id="d">VER DNI</button>
+
   <div id="fondo"></div>
   <div id="menu"><div></div></div>
+
+  <div class="overlay" id="dni-over"><div></div></div>
 </div>
 
 <script>
 (function(){
   var app=document.getElementById('app');
   function t(e,f){e.addEventListener('click',function(g){g.stopPropagation();f(g)});e.addEventListener('touchstart',function(g){g.preventDefault();f(g)},{passive:false})}
-  t(document.getElementById('m'),function(){app.classList.add('abierto')});
-  t(document.getElementById('menu'),function(){app.classList.remove('abierto')});
-  t(document.getElementById('fondo'),function(){app.classList.remove('abierto')});
+  t(document.getElementById('m'),function(){app.classList.remove('dni-abierto');app.classList.add('menu-abierto')});
+  t(document.getElementById('menu'),function(){app.classList.remove('menu-abierto')});
+  t(document.getElementById('fondo'),function(){app.classList.remove('menu-abierto')});
   t(document.getElementById('q'),function(){window.location.href='./qr.html'});
-  t(document.getElementById('d'),function(){window.location.href='./dni.html'});
-  document.addEventListener('keydown',function(e){if(e.key==='Escape')app.classList.remove('abierto')});
+  t(document.getElementById('d'),function(){app.classList.remove('menu-abierto');app.classList.add('dni-abierto')});
+  t(document.getElementById('dni-over'),function(){app.classList.remove('dni-abierto')});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape'){app.classList.remove('menu-abierto');app.classList.remove('dni-abierto')}});
 })();
 </script>
 
