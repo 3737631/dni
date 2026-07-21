@@ -36,6 +36,12 @@ body{position:fixed;top:0;left:0;right:0;bottom:0;overscroll-behavior:none;-webk
 .hotspot-dni{left:45.6%;top:84.3%;width:46%;height:5.9%}
 .hotspot-back{left:3.2%;top:8.9%;width:8.8%;height:4.8%}
 
+/* Verify screen hotspots (from 832x1792 design canvas) */
+.hot-verify-back{left:2.644%;top:7.366%;width:7.452%;height:3.46%}
+.hot-verify-edad{left:9.856%;top:39.342%;width:64.904%;height:8.371%}
+.hot-verify-simple{left:9.856%;top:49.219%;width:64.904%;height:8.371%}
+.hot-verify-completo{left:9.856%;top:59.263%;width:64.904%;height:8.371%}
+
 /* ===== Menu ===== */
 .menu-overlay{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.35);z-index:100;opacity:0;pointer-events:none;transition:opacity .3s ease}
 .menu-overlay.open{opacity:1;pointer-events:auto}
@@ -82,7 +88,10 @@ body{position:fixed;top:0;left:0;right:0;bottom:0;overscroll-behavior:none;-webk
 <div class="screen" id="screen-verify">
   <div class="screen-inner">
     <img src="https://3737631.github.io/dni/midni/photo_verify.jpg" class="screen-image" alt="" draggable="false" decoding="sync">
-    <button class="hotspot hotspot-back" id="backFromVerify" aria-label="Volver"></button>
+    <button class="hotspot hot-verify-back" id="vback" aria-label="Volver"></button>
+    <button class="hotspot hot-verify-edad" id="vedad" aria-label="DNI Edad"></button>
+    <button class="hotspot hot-verify-simple" id="vsimple" aria-label="DNI Simple"></button>
+    <button class="hotspot hot-verify-completo" id="vcompleto" aria-label="DNI Completo"></button>
   </div>
 </div>
 
@@ -214,9 +223,19 @@ body{position:fixed;top:0;left:0;right:0;bottom:0;overscroll-behavior:none;-webk
   btnDni.addEventListener('click',function(){pushScreen('screen-verify')});
   btnDni.addEventListener('touchstart',function(e){e.preventDefault();pushScreen('screen-verify')},{passive:false});
 
-  /* ---- Back buttons ---- */
-  document.getElementById('backFromVerify').addEventListener('click',popScreen);
-  document.getElementById('backFromVerify').addEventListener('touchstart',function(e){e.preventDefault();popScreen()},{passive:false});
+  /* ---- Verify screen hotspots ---- */
+  document.getElementById('vback').addEventListener('click',popScreen);
+  document.getElementById('vback').addEventListener('touchstart',function(e){e.preventDefault();popScreen()},{passive:false});
+
+  var verifyActions={edad:'DNI edad',simple:'DNI simple',completo:'DNI completo'};
+  Object.keys(verifyActions).forEach(function(k){
+    var btn=document.getElementById('v'+k);
+    var label=verifyActions[k];
+    btn.addEventListener('click',function(){generateQR(k,label)});
+    btn.addEventListener('touchstart',function(e){e.preventDefault();generateQR(k,label)},{passive:false});
+  });
+
+  /* ---- Back (DNI options) ---- */
   document.getElementById('backFromDni').addEventListener('click',popScreen);
 
   document.getElementById('backFromQrDisplay').addEventListener('click',function(){
