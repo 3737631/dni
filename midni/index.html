@@ -7,39 +7,104 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <title>MiDNI</title>
 <style>
-html,body{margin:0;padding:0;width:100%;height:100%;overflow:hidden;background:#fff}
-body{position:fixed;inset:0;overscroll-behavior:none;-webkit-text-size-adjust:100%;font-family:-apple-system,Helvetica,Arial,sans-serif}
-.app-screen{position:fixed;inset:0;width:100vw;height:100dvh;overflow:hidden;background:#fff}
-.screen-image{position:absolute;inset:0;display:block;width:100%;height:100%;object-fit:cover;object-position:center top;user-select:none;pointer-events:none;-webkit-user-drag:none}
-.hotspot{position:absolute;z-index:20;margin:0;padding:0;border:0;background:transparent;outline:none;cursor:pointer;touch-action:manipulation;-webkit-appearance:none;appearance:none}
-#m{left:2%;top:10%;width:13%;height:7%}
-#q{right:2%;top:10%;width:13%;height:7%}
-#d{left:45%;top:79%;width:49%;height:7%}
-#fondo{position:absolute;inset:0;z-index:100;background:rgba(0,0,0,0.25);opacity:0;visibility:hidden;pointer-events:none;transition:opacity .25s,visibility .25s}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent;margin:0;padding:0}
+html,body{width:100%;height:100%;overflow:hidden;background:#f2f2f7;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif}
+body{position:fixed;inset:0;-webkit-text-size-adjust:100%;overscroll-behavior:none}
+#app{position:fixed;inset:0;width:100vw;height:100dvh;overflow:hidden;background:linear-gradient(180deg,#0b0b2e 0%,#1a1a4e 40%,#2a2a5e 100%)}
+/* Header */
+header{display:flex;align-items:center;justify-content:space-between;padding:max(env(safe-area-inset-top),16px) 16px 12px}
+#btnMenu{background:none;border:none;padding:8px;cursor:pointer;touch-action:manipulation;width:44px;height:44px;display:flex;align-items:center;justify-content:center}
+#btnMenu svg{display:block}
+#btnQr{background:none;border:none;padding:8px;cursor:pointer;touch-action:manipulation;width:44px;height:44px;display:flex;align-items:center;justify-content:center}
+/* Title */
+.title-area{text-align:center;padding:4px 20px 8px}
+.title-area h1{color:#fff;font-size:22px;font-weight:700;letter-spacing:1px;margin:0}
+.title-area p{color:rgba(255,255,255,0.5);font-size:12px;margin:2px 0 0}
+/* Card */
+.card{background:linear-gradient(135deg,#1a1a5e,#2d2d7e);border-radius:20px;margin:8px 20px;padding:20px;display:flex;gap:16px;box-shadow:0 8px 32px rgba(0,0,0,0.3);border:1px solid rgba(255,255,255,0.08)}
+.card-photo{width:90px;height:115px;border-radius:10px;overflow:hidden;flex-shrink:0;background:rgba(255,255,255,0.1)}
+.card-photo img{width:100%;height:100%;object-fit:cover;display:block}
+.card-info{flex:1;display:flex;flex-direction:column;justify-content:center;gap:3px}
+.card-info .name{color:#fff;font-size:17px;font-weight:600;line-height:1.2}
+.card-info .id{color:rgba(255,255,255,0.6);font-size:13px;letter-spacing:1px}
+.card-info .expiry{color:rgba(255,255,255,0.4);font-size:11px}
+.card-info .flag{color:rgba(255,255,255,0.3);font-size:10px;margin-top:4px}
+/* Button */
+.btn-area{padding:12px 20px;flex:1;display:flex;flex-direction:column;justify-content:center}
+#btnDni{width:100%;padding:16px;font-size:17px;font-weight:600;background:linear-gradient(135deg,#667eea,#764ba2);color:#fff;border:none;border-radius:14px;cursor:pointer;touch-action:manipulation;font-family:inherit;box-shadow:0 4px 16px rgba(102,126,234,0.4)}
+#btnDni:active{transform:scale(0.98)}
+/* Footer */
+footer{text-align:center;padding:12px 20px max(env(safe-area-inset-bottom),16px)}
+footer p{color:rgba(255,255,255,0.25);font-size:10px;letter-spacing:0.5px}
+/* Backdrop & Menu */
+#fondo{position:fixed;inset:0;z-index:100;background:rgba(0,0,0,0.3);opacity:0;visibility:hidden;pointer-events:none;transition:opacity .25s,visibility .25s}
 #app.menu-abierto #fondo{opacity:1;visibility:visible;pointer-events:auto}
-#menu{position:absolute;top:0;left:0;z-index:200;width:88%;height:100%;overflow:hidden;background:#fff;transform:translateX(-105%);visibility:hidden;transition:transform .3s cubic-bezier(0.22,1,0.36,1),visibility .3s;box-shadow:8px 0 20px rgba(0,0,0,0.15)}
+#menu{position:fixed;top:0;left:0;z-index:200;width:88%;height:100dvh;overflow:hidden;background:#fff;transform:translateX(-105%);visibility:hidden;transition:transform .3s cubic-bezier(0.22,1,0.36,1),visibility .3s;box-shadow:8px 0 20px rgba(0,0,0,0.15)}
 #app.menu-abierto #menu{transform:translateX(0);visibility:visible}
-#menu>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:left top;pointer-events:none}
+#menu img{display:block;width:100%;height:100%;object-fit:cover;object-position:left top}
 </style>
 </head>
 <body>
-<div id="app" class="app-screen">
-  <img src="https://3737631.github.io/dni/midni/photo2.jpg" class="screen-image" alt="">
-  <button id="m" class="hotspot" aria-label="Menú"></button>
-  <button id="q" class="hotspot" aria-label="QR"></button>
-  <button id="d" class="hotspot" aria-label="Ver mi DNI"></button>
+<div id="app">
+  <header>
+    <button id="btnMenu" aria-label="Menú">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+        <rect x="3" y="6" width="18" height="2" rx="1" fill="#fff"/>
+        <rect x="3" y="11" width="18" height="2" rx="1" fill="#fff"/>
+        <rect x="3" y="16" width="18" height="2" rx="1" fill="#fff"/>
+      </svg>
+    </button>
+    <button id="btnQr" aria-label="QR">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+        <rect x="3" y="3" width="7" height="7" rx="1.5" stroke="#fff" stroke-width="1.8"/>
+        <rect x="14" y="3" width="7" height="7" rx="1.5" stroke="#fff" stroke-width="1.8"/>
+        <rect x="3" y="14" width="7" height="7" rx="1.5" stroke="#fff" stroke-width="1.8"/>
+        <rect x="14" y="14" width="3" height="3" rx=".8" fill="#fff"/>
+        <rect x="18" y="14" width="3" height="3" rx=".8" fill="#fff"/>
+        <rect x="14" y="18" width="3" height="3" rx=".8" fill="#fff"/>
+        <rect x="18" y="18" width="3" height="3" rx=".8" fill="#fff"/>
+      </svg>
+    </button>
+  </header>
+
+  <div class="title-area">
+    <h1>MiDNI</h1>
+    <p>Documento Nacional de Identidad</p>
+  </div>
+
+  <div class="card">
+    <div class="card-photo">
+      <img src="https://3737631.github.io/dni/midni/photo2.jpg" alt="" decoding="sync" fetchpriority="high" draggable="false">
+    </div>
+    <div class="card-info">
+      <span class="name">MARÍA GARCÍA LÓPEZ</span>
+      <span class="id">12345678Z</span>
+      <span class="expiry">Valido hasta 15/06/2030</span>
+      <span class="flag">ESPAÑOLA</span>
+    </div>
+  </div>
+
+  <div class="btn-area">
+    <button id="btnDni">Mostrar mi DNI</button>
+  </div>
+
+  <footer>
+    <p>Policía Nacional</p>
+  </footer>
+
   <div id="fondo"></div>
   <div id="menu"><img src="https://3737631.github.io/dni/midni/photo_menu.jpg" alt=""></div>
 </div>
+
 <script>
 (function(){
   var a=document.getElementById('app');
   function t(e,f){e.addEventListener('click',function(g){g.stopPropagation();f(g)});e.addEventListener('touchstart',function(g){g.preventDefault();f(g)},{passive:false})}
-  t(document.getElementById('m'),function(){a.classList.add('menu-abierto')});
+  t(document.getElementById('btnMenu'),function(){a.classList.add('menu-abierto')});
   t(document.getElementById('menu'),function(){a.classList.remove('menu-abierto')});
   t(document.getElementById('fondo'),function(){a.classList.remove('menu-abierto')});
-  t(document.getElementById('q'),function(){window.location.href='./qr.html'});
-  t(document.getElementById('d'),function(){window.location.href='./dni.html'});
+  t(document.getElementById('btnQr'),function(){window.location.href='./qr.html'});
+  t(document.getElementById('btnDni'),function(){window.location.href='./dni.html'});
   document.addEventListener('keydown',function(e){if(e.key==='Escape')a.classList.remove('menu-abierto')});
   document.addEventListener('touchmove',function(e){e.preventDefault()},{passive:false});
   document.addEventListener('wheel',function(e){e.preventDefault()},{passive:false});
