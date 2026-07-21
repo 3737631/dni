@@ -5,62 +5,48 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
 <title>MiDNI</title>
 <style>
-*{margin:0;padding:0;box-sizing:border-box}
-html,body{width:100%;min-height:100%;background:#fff;overflow:hidden;font-family:-apple-system,Helvetica,Arial,sans-serif}
-
-#app{position:relative;width:100%;overflow:hidden;min-height:100dvh}
-
-/* Main image with aspect ratio */
-#app>div:first-child{width:100%;padding-bottom:215.49%;background:url(https://3737631.github.io/dni/midni/photo2.jpg) center top / 100% auto no-repeat}
-
-/* Buttons */
-.b{position:absolute;z-index:50;cursor:pointer;background:rgba(255,0,0,0.15);border:2px solid rgba(255,0,0,0.3);border-radius:4px;padding:0;margin:0;font:inherit;font-size:10px;font-weight:700;color:rgba(255,0,0,0.5);display:flex;align-items:center;justify-content:center;outline:none;-webkit-appearance:none;appearance:none;touch-action:manipulation;-webkit-tap-highlight-color:transparent}
-#m{left:2.5%;top:8.4%;width:11%;height:6%}
-#q{right:3.5%;top:8.2%;width:11%;height:6%}
-#d{left:45.5%;top:83.6%;width:47%;height:6.2%}
-
-/* Backdrop */
+html,body{margin:0;padding:0;width:100%;min-height:100%;background:white;overflow-x:hidden;font-family:-apple-system,Helvetica,Arial,sans-serif}
+#app{position:relative;width:100%;line-height:0}
+#app>img{display:block;width:100%;height:auto;pointer-events:none;-webkit-user-select:none;user-select:none}
+.hotspot{position:absolute;z-index:999;padding:0;margin:0;border:0;background:rgba(255,0,0,0.18);outline:2px solid red;pointer-events:auto;touch-action:manipulation;cursor:pointer;-webkit-appearance:none;appearance:none}
+#m{left:2.5%;top:10.5%;width:11.5%;height:5.2%}
+#q{right:2.5%;top:10.5%;width:11.5%;height:5.2%}
+#d{left:45.5%;top:84.1%;width:47%;height:6.1%}
 #fondo{position:absolute;inset:0;z-index:100;background:rgba(0,0,0,0.25);opacity:0;visibility:hidden;pointer-events:none;transition:opacity .25s,visibility .25s}
 #app.menu-abierto #fondo{opacity:1;visibility:visible;pointer-events:auto}
-
-/* Menu slide */
 #menu{position:absolute;top:0;left:0;z-index:200;width:88%;height:100%;overflow:hidden;background:#fff;transform:translateX(-105%);visibility:hidden;transition:transform .3s cubic-bezier(0.22,1,0.36,1),visibility .3s;box-shadow:8px 0 20px rgba(0,0,0,0.15)}
 #app.menu-abierto #menu{transform:translateX(0);visibility:visible}
-#menu>div:first-child{width:100%;padding-bottom:216.22%;background:url(https://3737631.github.io/dni/midni/photo_menu.jpg) center / 100% auto no-repeat}
-
-/* VER DNI overlay */
+#menu>img{display:block;width:100%;height:100%;object-fit:cover;object-position:left top;pointer-events:none}
 .overlay{position:absolute;inset:0;z-index:300;opacity:0;visibility:hidden;pointer-events:none;transition:opacity .25s,visibility .25s;background:#fff}
 #app.dni-abierto #dni-over{opacity:1;visibility:visible;pointer-events:auto}
-#dni-over>div:first-child{width:100%;height:100%;background:url(https://3737631.github.io/dni/midni/photo_dni.jpg) center / contain no-repeat}
+#dni-over>img{display:block;width:100%;height:100%;object-fit:contain;pointer-events:none}
 </style>
 </head>
 <body>
-
 <div id="app">
-  <div></div>
-  <button class="b" id="m">MENÚ</button>
-  <button class="b" id="q">QR</button>
-  <button class="b" id="d">VER DNI</button>
+  <img src="https://3737631.github.io/dni/midni/photo2.jpg" alt="">
+
+  <button id="m" class="hotspot" aria-label="Abrir menú"></button>
+  <button id="q" class="hotspot" aria-label="Abrir QR"></button>
+  <button id="d" class="hotspot" aria-label="Ver mi DNI"></button>
 
   <div id="fondo"></div>
-  <div id="menu"><div></div></div>
+  <div id="menu"><img src="https://3737631.github.io/dni/midni/photo_menu.jpg" alt=""></div>
 
-  <div class="overlay" id="dni-over"><div></div></div>
+  <div class="overlay" id="dni-over"><img src="https://3737631.github.io/dni/midni/photo_dni.jpg" alt=""></div>
 </div>
-
 <script>
 (function(){
-  var app=document.getElementById('app');
+  var a=document.getElementById('app');
   function t(e,f){e.addEventListener('click',function(g){g.stopPropagation();f(g)});e.addEventListener('touchstart',function(g){g.preventDefault();f(g)},{passive:false})}
-  t(document.getElementById('m'),function(){app.classList.remove('dni-abierto');app.classList.add('menu-abierto')});
-  t(document.getElementById('menu'),function(){app.classList.remove('menu-abierto')});
-  t(document.getElementById('fondo'),function(){app.classList.remove('menu-abierto')});
+  t(document.getElementById('m'),function(){a.classList.remove('dni-abierto');a.classList.add('menu-abierto')});
+  t(document.getElementById('menu'),function(){a.classList.remove('menu-abierto')});
+  t(document.getElementById('fondo'),function(){a.classList.remove('menu-abierto')});
   t(document.getElementById('q'),function(){window.location.href='./qr.html'});
-  t(document.getElementById('d'),function(){app.classList.remove('menu-abierto');app.classList.add('dni-abierto')});
-  t(document.getElementById('dni-over'),function(){app.classList.remove('dni-abierto')});
-  document.addEventListener('keydown',function(e){if(e.key==='Escape'){app.classList.remove('menu-abierto');app.classList.remove('dni-abierto')}});
+  t(document.getElementById('d'),function(){a.classList.remove('menu-abierto');a.classList.add('dni-abierto')});
+  t(document.getElementById('dni-over'),function(){a.classList.remove('dni-abierto')});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape'){a.classList.remove('menu-abierto');a.classList.remove('dni-abierto')}});
 })();
 </script>
-
 </body>
 </html>
