@@ -11,9 +11,6 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <meta name="apple-mobile-web-app-title" content="MiDNI" />
   <link rel="stylesheet" href="style.css" />
-  <style>
-    .dni-page { display: flex; flex-direction: column; min-height: 100dvh; }
-  </style>
 </head>
 <body>
   <div class="dni-page" id="dniPage">
@@ -71,6 +68,17 @@
     </div>
 
   </div>
+  <script>
+(function(){
+  function updateViewportHeight(){
+    var h=window.visualViewport?window.visualViewport.height:window.innerHeight;
+    document.documentElement.style.setProperty('--viewport-height',Math.round(h)+'px')
+  }
+  updateViewportHeight();
+  window.addEventListener('resize',updateViewportHeight);
+  if(window.visualViewport)window.visualViewport.addEventListener('resize',updateViewportHeight);
+})();
+</script>
   <script src="dni.js"></script>
 </body>
 </html>
