@@ -2,26 +2,25 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <title>MiDNI</title>
 <style>
-*{box-sizing:border-box}
-html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#fff}
-body{position:fixed;inset:0;overscroll-behavior:none;-webkit-text-size-adjust:none;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;padding:0;width:100%;background:#fff;overflow:hidden}
+html{height:100%}
+body{position:fixed;inset:0;width:100%;height:100%;overscroll-behavior:none;-webkit-text-size-adjust:100%;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif}
 
-.app-viewport{position:fixed;inset:0;overflow:hidden;background:#fff;display:flex;justify-content:center;align-items:flex-start}
+.screen{position:fixed;top:0;left:0;width:100vw;height:var(--viewport-height,100svh);overflow:hidden;background:#fff}
 
-.design-canvas{position:relative;flex:none;width:min(100vw,calc(100dvh*832/1792));height:min(100dvh,calc(100vw*1792/832));aspect-ratio:832/1792;overflow:hidden;background:#fff}
+.screen-image{position:absolute;top:0;left:0;display:block;width:100vw;height:auto;max-width:none;pointer-events:none;user-select:none;-webkit-user-drag:none;object-fit:unset;transform:translateZ(0);backface-visibility:hidden;filter:none;opacity:1}
 
-.design-image{position:absolute;inset:0;display:block;width:100%;height:100%;object-fit:fill;object-position:0 0;pointer-events:none;user-select:none;-webkit-user-drag:none;filter:none;opacity:1;transform:none}
+.hotspot{position:absolute;z-index:50;margin:0;padding:0;border:0;outline:0;background:transparent;appearance:none;-webkit-appearance:none;pointer-events:auto;touch-action:manipulation;cursor:pointer}
 
-.hotspot{position:absolute;z-index:20;padding:0;margin:0;border:0;outline:0;background:transparent;appearance:none;-webkit-appearance:none;pointer-events:auto;touch-action:manipulation;cursor:pointer;background:rgba(255,0,0,0.15);outline:2px solid red}
-
-.hotspot-menu{left:2.8%;top:8.6%;width:10.5%;height:5.5%}
-.hotspot-qr{left:83.5%;top:8.5%;width:10.5%;height:5.5%}
-.hotspot-dni{left:45.5%;top:83.5%;width:46.5%;height:6.3%}
+.hotspot-menu{left:3.1%;top:9.2%;width:10%;height:4.8%}
+.hotspot-qr{right:3.3%;top:9.1%;width:10%;height:4.8%}
+.hotspot-dni{left:45.6%;top:83.7%;width:46.2%;height:5.8%}
 
 .menu-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.35);opacity:0;pointer-events:none;transition:opacity .32s ease;z-index:100}
 .menu-overlay.open{opacity:1;pointer-events:auto}
@@ -32,14 +31,12 @@ body{position:fixed;inset:0;overscroll-behavior:none;-webkit-text-size-adjust:no
 </style>
 </head>
 <body>
-<div class="app-viewport">
-  <div class="design-canvas" id="designCanvas">
-    <img src="https://3737631.github.io/dni/midni/photo2.jpg" class="design-image" alt="" draggable="false">
+<div class="screen" id="screen">
+  <img src="https://3737631.github.io/dni/midni/photo2.jpg" class="screen-image" alt="" draggable="false" decoding="sync" fetchpriority="high">
 
-    <button id="openMenu" class="hotspot hotspot-menu" aria-label="Abrir menú"></button>
-    <button id="openQr" class="hotspot hotspot-qr" aria-label="Abrir QR"></button>
-    <button id="openDni" class="hotspot hotspot-dni" aria-label="Ver mi DNI"></button>
-  </div>
+  <button id="openMenu" class="hotspot hotspot-menu" aria-label="Abrir menú"></button>
+  <button id="openQr" class="hotspot hotspot-qr" aria-label="Abrir QR"></button>
+  <button id="openDni" class="hotspot hotspot-dni" aria-label="Ver mi DNI"></button>
 </div>
 
 <div class="menu-overlay" id="menuOverlay"></div>
@@ -47,6 +44,14 @@ body{position:fixed;inset:0;overscroll-behavior:none;-webkit-text-size-adjust:no
 
 <script>
 (function(){
+  function updateViewportHeight(){
+    var h=window.visualViewport?window.visualViewport.height:window.innerHeight;
+    document.documentElement.style.setProperty('--viewport-height',Math.round(h)+'px')
+  }
+  updateViewportHeight();
+  window.addEventListener('resize',updateViewportHeight);
+  if(window.visualViewport)window.visualViewport.addEventListener('resize',updateViewportHeight);
+
   var overlay=document.getElementById('menuOverlay');
   var menu=document.getElementById('sideMenu');
   function openMenu(){menu.classList.add('open');overlay.classList.add('open')}
