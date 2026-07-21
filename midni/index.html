@@ -15,32 +15,14 @@
 <body>
   <main class="app">
 
-    <!-- Pantalla principal -->
+    <!-- Pantalla principal con imagen de fondo -->
     <div id="screen-main" class="screen active">
-      <div class="header">
-        <span class="header-title">MiDNI</span>
-        <button class="header-btn" id="btn-verify" aria-label="Verificar">Verificar</button>
-      </div>
-      <div class="dni-card">
-        <div class="dni-photo" id="dni-photo"></div>
-        <div class="dni-info">
-          <p class="dni-name" id="dni-name">—</p>
-          <p class="dni-number" id="dni-number">—</p>
-          <p class="dni-expiry" id="dni-expiry">—</p>
-        </div>
-      </div>
-      <div class="actions">
-        <button class="btn-primary" id="btn-show-dni">Mostrar mi DNI</button>
-      </div>
-      <div class="nav-bottom">
-        <button class="nav-item active" id="nav-home">
-          <span class="nav-icon">🏠</span>
-          <span>Inicio</span>
-        </button>
-        <button class="nav-item" id="nav-verify">
-          <span class="nav-icon">📷</span>
-          <span>Verificar</span>
-        </button>
+      <div class="pantalla-dni">
+        <img src="./photo2.jpg" alt="" class="imagen-pantalla">
+
+        <button class="zona-invisible boton-menu" aria-label="Abrir menú" onclick="abrirMenu()"></button>
+        <button class="zona-invisible boton-qr" aria-label="Abrir QR" onclick="abrirQR()"></button>
+        <button class="zona-invisible boton-ver-dni" aria-label="Ver mi DNI" onclick="verDNI()"></button>
       </div>
     </div>
 
@@ -78,7 +60,7 @@
       </div>
       <div class="qr-container">
         <div class="qr-box" id="qr-box"></div>
-        <p class="qr-label" id="qr-label">DNI Simple</p>
+        <p class="qr-label" id="qr-label">DNI simple</p>
         <p class="qr-timer" id="qr-timer">Válido <span id="timer-seconds">60</span>s</p>
       </div>
     </div>

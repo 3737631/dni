@@ -36,6 +36,53 @@ body {
   display: flex;
 }
 
+/* Main screen - image with invisible buttons */
+.pantalla-dni {
+  position: relative;
+  width: 100%;
+  line-height: 0;
+}
+
+.imagen-pantalla {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.zona-invisible {
+  position: absolute;
+  z-index: 20;
+  padding: 0;
+  margin: 0;
+  border: 0;
+  outline: none;
+  background: transparent;
+  opacity: 0;
+  cursor: pointer;
+  touch-action: manipulation;
+}
+
+.boton-menu {
+  left: 3.2%;
+  top: 9.5%;
+  width: 9.5%;
+  height: 4.2%;
+}
+
+.boton-qr {
+  left: 83.8%;
+  top: 9.2%;
+  width: 9.5%;
+  height: 4.8%;
+}
+
+.boton-ver-dni {
+  left: 45.2%;
+  top: 83.9%;
+  width: 47.2%;
+  height: 6.2%;
+}
+
 /* Header */
 .header {
   display: flex;
@@ -60,99 +107,6 @@ body {
 }
 .back-btn {
   font-size: 16px;
-}
-
-/* DNI Card */
-.dni-card {
-  background: #fff;
-  margin: 20px;
-  border-radius: 16px;
-  padding: 24px;
-  display: flex;
-  gap: 20px;
-  box-shadow: 0 2px 12px rgba(0,0,0,0.06);
-}
-.dni-photo {
-  width: 100px;
-  height: 130px;
-  border-radius: 8px;
-  background: #e5e5ea;
-  flex-shrink: 0;
-  background-size: cover;
-  background-position: center;
-}
-.dni-info {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  gap: 4px;
-}
-.dni-name {
-  font-size: 18px;
-  font-weight: 600;
-  margin: 0;
-}
-.dni-number {
-  font-size: 14px;
-  color: #555;
-  margin: 0;
-}
-.dni-expiry {
-  font-size: 13px;
-  color: #888;
-  margin: 0;
-}
-
-/* Actions */
-.actions {
-  padding: 0 20px;
-  flex: 1;
-}
-.btn-primary {
-  width: 100%;
-  padding: 16px;
-  font-size: 17px;
-  font-weight: 600;
-  background: #007aff;
-  color: #fff;
-  border: none;
-  border-radius: 14px;
-  cursor: pointer;
-  font-family: inherit;
-  transition: background 0.2s;
-}
-.btn-primary:active {
-  background: #0056b3;
-}
-
-/* Bottom nav */
-.nav-bottom {
-  display: flex;
-  border-top: 1px solid #e5e5ea;
-  background: #fff;
-  padding: 8px 0;
-  padding-bottom: calc(8px + env(safe-area-inset-bottom));
-}
-.nav-item {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 2px;
-  background: none;
-  border: none;
-  font-size: 10px;
-  color: #8e8e93;
-  cursor: pointer;
-  font-family: inherit;
-  padding: 4px;
-}
-.nav-item.active {
-  color: #007aff;
-}
-.nav-icon {
-  font-size: 22px;
 }
 
 /* Choose options */

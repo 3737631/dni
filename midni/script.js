@@ -1,13 +1,5 @@
-// Mock data
-const MOCK_DNI = {
-  name: 'MARÍA GARCÍA LÓPEZ',
-  number: '12345678Z',
-  expiry: 'Valido hasta: 15/06/2030',
-  photo: './photo1.jpg'
-};
-
 let qrTimer = null;
-let secondsLeft = 30;
+let secondsLeft = 60;
 let currentQrType = '';
 
 function showScreen(id) {
@@ -22,18 +14,21 @@ function goFullscreen() {
   else if (el.msRequestFullscreen) el.msRequestFullscreen();
 }
 
-// Main screen - show DNI data
-document.getElementById('dni-photo').style.backgroundImage = `url('${MOCK_DNI.photo}')`;
-document.getElementById('dni-name').textContent = MOCK_DNI.name;
-document.getElementById('dni-number').textContent = MOCK_DNI.number;
-document.getElementById('dni-expiry').textContent = MOCK_DNI.expiry;
-
-// Fullscreen on first tap
 document.addEventListener('click', goFullscreen, { once: true });
 document.addEventListener('touchstart', goFullscreen, { once: true });
 
-// Navigate to choose screen
-document.getElementById('btn-show-dni').addEventListener('click', () => showScreen('screen-choose'));
+// Invisible button handlers
+function abrirMenu() {
+  // TODO
+}
+
+function abrirQR() {
+  showScreen('screen-verify');
+}
+
+function verDNI() {
+  showScreen('screen-choose');
+}
 
 // Back buttons
 document.getElementById('back-choose').addEventListener('click', () => showScreen('screen-main'));
@@ -67,8 +62,3 @@ function generateQR(type, label) {
 document.getElementById('opt-edad').addEventListener('click', () => generateQR('edad', 'DNI edad'));
 document.getElementById('opt-simple').addEventListener('click', () => generateQR('simple', 'DNI simple'));
 document.getElementById('opt-completo').addEventListener('click', () => generateQR('completo', 'DNI completo'));
-
-// Bottom nav
-document.getElementById('nav-home').addEventListener('click', () => showScreen('screen-main'));
-document.getElementById('nav-verify').addEventListener('click', () => showScreen('screen-verify'));
-document.getElementById('btn-verify').addEventListener('click', () => showScreen('screen-verify'));
