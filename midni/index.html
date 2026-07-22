@@ -292,20 +292,22 @@ body{position:fixed;top:0;left:0;right:0;bottom:0;overscroll-behavior:none;-webk
   }
   document.getElementById('vback').addEventListener('click',backSafe);
   document.getElementById('vback').addEventListener('touchstart',function(e){e.preventDefault();backSafe()},{passive:false});
-  document.getElementById('eback').addEventListener('click',backSafe);
-  document.getElementById('eback').addEventListener('touchstart',function(e){e.preventDefault();backSafe()},{passive:false});
+  document.getElementById('eback').addEventListener('click',function(){edadNextQr();backSafe()});
+  document.getElementById('eback').addEventListener('touchstart',function(e){e.preventDefault();edadNextQr();backSafe()},{passive:false});
   document.getElementById('cback').addEventListener('click',backSafe);
   document.getElementById('cback').addEventListener('touchstart',function(e){e.preventDefault();backSafe()},{passive:false});
 
   var edadQrStep=0;
-  function openEdad(){
+  function edadNextQr(){
     edadQrStep++;
     if(edadQrStep>4)edadQrStep=1;
     for(var i=1;i<=4;i++){
       document.getElementById('edadQr'+i).style.display=(i===edadQrStep)?'block':'none';
     }
+  }
+  function openEdad(){
     pushScreen('screen-edad');
-    startCounter('counter-edad');
+    startCounter('counter-edad',edadNextQr);
   }
   document.getElementById('vedad').addEventListener('click',openEdad);
   document.getElementById('vedad').addEventListener('touchstart',function(e){e.preventDefault();openEdad()},{passive:false});
@@ -325,7 +327,7 @@ body{position:fixed;top:0;left:0;right:0;bottom:0;overscroll-behavior:none;-webk
   });
   /* ---- Counter for EDAD / COMPLETO ---- */
   var counters={};
-  function startCounter(id){
+  function startCounter(id,onZero){
     if(counters[id]){clearInterval(counters[id]);counters[id]=null}
     var el=document.getElementById(id);
     var count=60;
@@ -335,6 +337,7 @@ body{position:fixed;top:0;left:0;right:0;bottom:0;overscroll-behavior:none;-webk
       el.textContent=count;
       if(count<=0){
         clearInterval(counters[id]);counters[id]=null;
+        if(onZero)onZero();
         popScreen();
       }
     },1000);
