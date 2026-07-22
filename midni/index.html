@@ -301,10 +301,10 @@ body{position:fixed;top:0;left:0;right:0;bottom:0;overscroll-behavior:none;-webk
   }
   document.getElementById('vback').addEventListener('click',backSafe);
   document.getElementById('vback').addEventListener('touchstart',function(e){e.preventDefault();backSafe()},{passive:false});
-  document.getElementById('eback').addEventListener('click',function(){backSafe();setTimeout(nextQr,400)});
-  document.getElementById('eback').addEventListener('touchstart',function(e){e.preventDefault();backSafe();setTimeout(nextQr,400)},{passive:false});
-  document.getElementById('cback').addEventListener('click',function(){backSafe();setTimeout(nextQr,400)});
-  document.getElementById('cback').addEventListener('touchstart',function(e){e.preventDefault();backSafe();setTimeout(nextQr,400)},{passive:false});
+  document.getElementById('eback').addEventListener('click',function(){backSafe();setTimeout(function(){nextQr();startCounter('counter-verify')},400)});
+  document.getElementById('eback').addEventListener('touchstart',function(e){e.preventDefault();backSafe();setTimeout(function(){nextQr();startCounter('counter-verify')},400)},{passive:false});
+  document.getElementById('cback').addEventListener('click',function(){backSafe();setTimeout(function(){nextQr();startCounter('counter-verify')},400)});
+  document.getElementById('cback').addEventListener('touchstart',function(e){e.preventDefault();backSafe();setTimeout(function(){nextQr();startCounter('counter-verify')},400)},{passive:false});
 
   var qrBase="https://3737631.github.io/dni/midni/qr_edad_";
   var qrOrder=[],qrIndex=0;
@@ -321,6 +321,7 @@ body{position:fixed;top:0;left:0;right:0;bottom:0;overscroll-behavior:none;-webk
     showQr();
   }
   function openEdad(){
+    if(counters['counter-verify']){clearInterval(counters['counter-verify']);counters['counter-verify']=null}
     if(!qrOrder.length){qrOrder=shuffle([5,6,7,8,1,2,3,4]);qrIndex=0}
     showQr();
     pushScreen('screen-edad');
@@ -332,6 +333,7 @@ body{position:fixed;top:0;left:0;right:0;bottom:0;overscroll-behavior:none;-webk
   document.getElementById('vsimple').addEventListener('click',function(){generateQR('simple','DNI simple')});
   document.getElementById('vsimple').addEventListener('touchstart',function(e){e.preventDefault();generateQR('simple','DNI simple')},{passive:false});
   function openCompleto(){
+    if(counters['counter-verify']){clearInterval(counters['counter-verify']);counters['counter-verify']=null}
     if(!qrOrder.length){qrOrder=shuffle([5,6,7,8,1,2,3,4]);qrIndex=0}
     showQr();
     pushScreen('screen-completo');
