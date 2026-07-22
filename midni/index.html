@@ -147,6 +147,9 @@ body{position:fixed;top:0;left:0;right:0;bottom:0;overscroll-behavior:none;-webk
   <div class="screen-inner">
     <img src="https://3737631.github.io/dni/midni/photo_completo.jpg" class="screen-image" alt="" draggable="false" decoding="sync">
     <button class="hotspot hot-verify-back" id="cback" aria-label="Volver"></button>
+    <div class="qr-overlay" id="cqrOverlay">
+      <img class="qr-overlay-img" id="cqrImg" alt="" decoding="sync" fetchpriority="high">
+    </div>
   </div>
   <div class="bottom-bar">
     <div class="bottom-bar-inner">
@@ -295,15 +298,17 @@ body{position:fixed;top:0;left:0;right:0;bottom:0;overscroll-behavior:none;-webk
   document.getElementById('vback').addEventListener('touchstart',function(e){e.preventDefault();backSafe()},{passive:false});
   document.getElementById('eback').addEventListener('click',function(){backSafe();setTimeout(nextQr,400)});
   document.getElementById('eback').addEventListener('touchstart',function(e){e.preventDefault();backSafe();setTimeout(nextQr,400)},{passive:false});
-  document.getElementById('cback').addEventListener('click',backSafe);
-  document.getElementById('cback').addEventListener('touchstart',function(e){e.preventDefault();backSafe()},{passive:false});
+  document.getElementById('cback').addEventListener('click',function(){backSafe();setTimeout(nextQr,400)});
+  document.getElementById('cback').addEventListener('touchstart',function(e){e.preventDefault();backSafe();setTimeout(nextQr,400)},{passive:false});
 
   var qrBase="https://3737631.github.io/dni/midni/qr_edad_";
   var qrOrder=[],qrIndex=0;
   function shuffle(a){for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=a[i];a[i]=a[j];a[j]=t}return a}
   function showQr(){
     if(!qrOrder.length)return;
-    document.getElementById('edadQrImg').src=qrBase+qrOrder[qrIndex]+".jpg";
+    var src=qrBase+qrOrder[qrIndex]+".jpg";
+    document.getElementById('edadQrImg').src=src;
+    document.getElementById('cqrImg').src=src;
   }
   function nextQr(){
     qrIndex++;
@@ -321,7 +326,7 @@ body{position:fixed;top:0;left:0;right:0;bottom:0;overscroll-behavior:none;-webk
 
   document.getElementById('vsimple').addEventListener('click',function(){generateQR('simple','DNI simple')});
   document.getElementById('vsimple').addEventListener('touchstart',function(e){e.preventDefault();generateQR('simple','DNI simple')},{passive:false});
-  function openCompleto(){pushScreen('screen-completo');startCounter('counter-completo')}
+  function openCompleto(){showQr();pushScreen('screen-completo');startCounter('counter-completo',nextQr)}
   document.getElementById('vcompleto').addEventListener('click',openCompleto);
   document.getElementById('vcompleto').addEventListener('touchstart',function(e){e.preventDefault();openCompleto()},{passive:false});
 
