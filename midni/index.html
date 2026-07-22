@@ -289,25 +289,23 @@ body{position:fixed;top:0;left:0;right:0;bottom:0;overscroll-behavior:none;-webk
   }
   document.getElementById('vback').addEventListener('click',backSafe);
   document.getElementById('vback').addEventListener('touchstart',function(e){e.preventDefault();backSafe()},{passive:false});
-  document.getElementById('eback').addEventListener('click',function(){backSafe();setTimeout(edadNextQr,400)});
-  document.getElementById('eback').addEventListener('touchstart',function(e){e.preventDefault();backSafe();setTimeout(edadNextQr,400)},{passive:false});
+  document.getElementById('eback').addEventListener('click',function(){backSafe();setTimeout(nextQr,400)});
+  document.getElementById('eback').addEventListener('touchstart',function(e){e.preventDefault();backSafe();setTimeout(nextQr,400)},{passive:false});
   document.getElementById('cback').addEventListener('click',backSafe);
   document.getElementById('cback').addEventListener('touchstart',function(e){e.preventDefault();backSafe()},{passive:false});
 
-  var edadQrStep=0;
   var qrBase="https://3737631.github.io/dni/midni/qr_edad_";
-  function setEdadQr(n){
+  var qrOrder=[],qrIndex=0;
+  function shuffle(a){for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=a[i];a[i]=a[j];a[j]=t}return a}
+  function nextQr(){
+    if(qrIndex>=qrOrder.length){qrOrder=shuffle([1,2,3,4]);qrIndex=0}
+    var n=qrOrder[qrIndex++];
     document.getElementById('edadQrImg').style.backgroundImage="url("+qrBase+n+".jpg)";
   }
-  function edadNextQr(){
-    edadQrStep++;
-    if(edadQrStep>4)edadQrStep=1;
-    setEdadQr(edadQrStep);
-  }
   function openEdad(){
-    if(!edadQrStep){edadQrStep=1;setEdadQr(1)}
+    nextQr();
     pushScreen('screen-edad');
-    startCounter('counter-edad',edadNextQr);
+    startCounter('counter-edad',nextQr);
   }
   document.getElementById('vedad').addEventListener('click',openEdad);
   document.getElementById('vedad').addEventListener('touchstart',function(e){e.preventDefault();openEdad()},{passive:false});
