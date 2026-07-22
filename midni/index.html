@@ -297,13 +297,18 @@ body{position:fixed;top:0;left:0;right:0;bottom:0;overscroll-behavior:none;-webk
   var qrBase="https://3737631.github.io/dni/midni/qr_edad_";
   var qrOrder=[],qrIndex=0;
   function shuffle(a){for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=a[i];a[i]=a[j];a[j]=t}return a}
+  function showQr(){
+    if(!qrOrder.length)return;
+    document.getElementById('edadQrImg').style.backgroundImage="url("+qrBase+qrOrder[qrIndex]+".jpg)";
+  }
   function nextQr(){
+    qrIndex++;
     if(qrIndex>=qrOrder.length){qrOrder=shuffle([1,2,3,4]);qrIndex=0}
-    var n=qrOrder[qrIndex++];
-    document.getElementById('edadQrImg').style.backgroundImage="url("+qrBase+n+".jpg)";
+    showQr();
   }
   function openEdad(){
-    nextQr();
+    if(!qrOrder.length){qrOrder=shuffle([1,2,3,4]);qrIndex=0}
+    showQr();
     pushScreen('screen-edad');
     startCounter('counter-edad',nextQr);
   }
