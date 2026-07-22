@@ -301,10 +301,10 @@ body{position:fixed;top:0;left:0;right:0;bottom:0;overscroll-behavior:none;-webk
   }
   document.getElementById('vback').addEventListener('click',backSafe);
   document.getElementById('vback').addEventListener('touchstart',function(e){e.preventDefault();backSafe()},{passive:false});
-  document.getElementById('eback').addEventListener('click',backSafe);
-  document.getElementById('eback').addEventListener('touchstart',function(e){e.preventDefault();backSafe()},{passive:false});
-  document.getElementById('cback').addEventListener('click',backSafe);
-  document.getElementById('cback').addEventListener('touchstart',function(e){e.preventDefault();backSafe()},{passive:false});
+  document.getElementById('eback').addEventListener('click',function(){backSafe();setTimeout(nextQr,400)});
+  document.getElementById('eback').addEventListener('touchstart',function(e){e.preventDefault();backSafe();setTimeout(nextQr,400)},{passive:false});
+  document.getElementById('cback').addEventListener('click',function(){backSafe();setTimeout(nextQr,400)});
+  document.getElementById('cback').addEventListener('touchstart',function(e){e.preventDefault();backSafe();setTimeout(nextQr,400)},{passive:false});
 
   var qrBase="https://3737631.github.io/dni/midni/qr_edad_";
   var qrOrder=[],qrIndex=0;
