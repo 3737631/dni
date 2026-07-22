@@ -41,6 +41,8 @@ body{position:fixed;top:0;left:0;right:0;bottom:0;overscroll-behavior:none;-webk
 #screen-completo .screen-inner{margin-top:calc(-6vh - 3mm);background:#4E8EF8}
 #screen-completo{background:#4E8EF8}
 
+.qr-overlay{position:absolute;left:11.549%;top:45.052%;width:78.451%;height:36.262%;overflow:hidden;z-index:60}
+.qr-overlay-img{width:100%;height:100%;object-fit:contain;position:absolute;left:0;top:0;display:none}
 #screen-edad .hot-verify-back,
 #screen-completo .hot-verify-back{left:auto;right:2.817%}
 
@@ -123,6 +125,12 @@ body{position:fixed;top:0;left:0;right:0;bottom:0;overscroll-behavior:none;-webk
   <div class="screen-inner">
     <img src="https://3737631.github.io/dni/midni/photo_edad.jpg" class="screen-image" alt="" draggable="false" decoding="sync">
     <button class="hotspot hot-verify-back" id="eback" aria-label="Volver"></button>
+    <div class="qr-overlay" id="edadQrOverlay">
+      <img src="https://3737631.github.io/dni/midni/qr_edad_1.jpg" class="qr-overlay-img" id="edadQr1" alt="">
+      <img src="https://3737631.github.io/dni/midni/qr_edad_2.jpg" class="qr-overlay-img" id="edadQr2" alt="">
+      <img src="https://3737631.github.io/dni/midni/qr_edad_3.jpg" class="qr-overlay-img" id="edadQr3" alt="">
+      <img src="https://3737631.github.io/dni/midni/qr_edad_4.jpg" class="qr-overlay-img" id="edadQr4" alt="">
+    </div>
   </div>
   <div class="bottom-bar">
     <div class="bottom-bar-inner">
@@ -289,7 +297,16 @@ body{position:fixed;top:0;left:0;right:0;bottom:0;overscroll-behavior:none;-webk
   document.getElementById('cback').addEventListener('click',backSafe);
   document.getElementById('cback').addEventListener('touchstart',function(e){e.preventDefault();backSafe()},{passive:false});
 
-  function openEdad(){pushScreen('screen-edad');startCounter('counter-edad')}
+  var edadQrStep=0;
+  function openEdad(){
+    pushScreen('screen-edad');
+    startCounter('counter-edad');
+    edadQrStep++;
+    if(edadQrStep>4)edadQrStep=1;
+    for(var i=1;i<=4;i++){
+      document.getElementById('edadQr'+i).style.display=(i===edadQrStep)?'block':'none';
+    }
+  }
   document.getElementById('vedad').addEventListener('click',openEdad);
   document.getElementById('vedad').addEventListener('touchstart',function(e){e.preventDefault();openEdad()},{passive:false});
 
