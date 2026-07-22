@@ -10,6 +10,10 @@
 <link rel="manifest" href="./manifest.webmanifest">
 <link rel="apple-touch-icon" href="./apple-touch-icon.png">
 <title>MiDNI</title>
+<link rel="preload" as="image" href="https://3737631.github.io/dni/midni/qr_edad_1.jpg">
+<link rel="preload" as="image" href="https://3737631.github.io/dni/midni/qr_edad_2.jpg">
+<link rel="preload" as="image" href="https://3737631.github.io/dni/midni/qr_edad_3.jpg">
+<link rel="preload" as="image" href="https://3737631.github.io/dni/midni/qr_edad_4.jpg">
 <style>
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;-webkit-text-size-adjust:100%;margin:0;padding:0}
 html,body{width:100%;height:100%;background:#fff;overflow:hidden}
@@ -42,7 +46,7 @@ body{position:fixed;top:0;left:0;right:0;bottom:0;overscroll-behavior:none;-webk
 #screen-completo{background:#4E8EF8}
 
 .qr-overlay{position:absolute;left:8%;top:46%;width:84%;height:36.26%;overflow:hidden;z-index:60;transform:translateZ(0)}
-.qr-overlay-img{width:100%;height:100%;background-size:cover;background-position:center;position:absolute;left:0;top:0;transform:scale(1.18);will-change:transform}
+.qr-overlay-img{width:100%;height:100%;object-fit:cover;position:absolute;left:0;top:0;transform:scale(1.18);will-change:transform}
 #screen-edad .hot-verify-back,
 #screen-completo .hot-verify-back{left:auto;right:2.817%}
 
@@ -126,7 +130,7 @@ body{position:fixed;top:0;left:0;right:0;bottom:0;overscroll-behavior:none;-webk
     <img src="https://3737631.github.io/dni/midni/photo_edad.jpg" class="screen-image" alt="" draggable="false" decoding="sync">
     <button class="hotspot hot-verify-back" id="eback" aria-label="Volver"></button>
     <div class="qr-overlay" id="edadQrOverlay">
-      <div class="qr-overlay-img" id="edadQrImg"></div>
+      <img class="qr-overlay-img" id="edadQrImg" alt="" decoding="sync" fetchpriority="high">
     </div>
   </div>
   <div class="bottom-bar">
@@ -299,7 +303,7 @@ body{position:fixed;top:0;left:0;right:0;bottom:0;overscroll-behavior:none;-webk
   function shuffle(a){for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=a[i];a[i]=a[j];a[j]=t}return a}
   function showQr(){
     if(!qrOrder.length)return;
-    document.getElementById('edadQrImg').style.backgroundImage="url("+qrBase+qrOrder[qrIndex]+".jpg)";
+    document.getElementById('edadQrImg').src=qrBase+qrOrder[qrIndex]+".jpg";
   }
   function nextQr(){
     qrIndex++;
