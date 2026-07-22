@@ -46,10 +46,10 @@ body{position:fixed;top:0;left:0;right:0;bottom:0;overscroll-behavior:none;-webk
 
 
 /* Verify screen hotspots (710x1536 design canvas) - RED for testing */
-.hot-verify-back{left:2.817%;top:7.617%;width:7.183%;height:3.516%;background:rgba(255,0,0,.15);outline:2px solid red}
-.hot-verify-edad{left:12.254%;top:47.721%;width:75.493%;height:12.174%;background:rgba(255,0,0,.15);outline:2px solid red}
-.hot-verify-simple{left:12.254%;top:61.393%;width:75.493%;height:17.253%;background:rgba(255,0,0,.15);outline:2px solid red}
-.hot-verify-completo{left:12.254%;top:80.143%;width:75.493%;height:12.76%;background:rgba(255,0,0,.15);outline:2px solid red}
+.hot-verify-back{left:2.817%;top:7.617%;width:7.183%;height:3.516%}
+.hot-verify-edad{left:12.254%;top:47.721%;width:75.493%;height:12.174%}
+.hot-verify-simple{left:12.254%;top:61.393%;width:75.493%;height:17.253%}
+.hot-verify-completo{left:12.254%;top:80.143%;width:75.493%;height:12.76%}
 
 /* ===== Menu ===== */
 .menu-overlay{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.35);z-index:100;opacity:0;pointer-events:none;transition:opacity .3s ease}
@@ -79,7 +79,8 @@ body{position:fixed;top:0;left:0;right:0;bottom:0;overscroll-behavior:none;-webk
 .qr-label{margin-top:20px;font-size:18px;font-weight:600}
 .qr-timer{margin-top:8px;font-size:14px;color:#888}
 .bottom-bar{position:absolute;left:0;right:0;bottom:0;width:100%;height:58px;background:linear-gradient(90deg,#4388F5 0%,#5798FA 50%,#4388F5 100%);border-radius:0;overflow:hidden;z-index:9999;pointer-events:none}
-.bottom-bar-inner{display:flex;align-items:center;justify-content:center;gap:8px;height:100%;transform:translateY(-1px)}
+.bottom-bar-inner{display:flex;align-items:center;justify-content:center;gap:4px;height:100%;transform:translateY(-1px)}
+#screen-verify .bottom-bar-inner{transform:translateY(4px)}
 .bottom-bar-text{font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text",system-ui,sans-serif;font-size:16px;font-weight:400;line-height:20px;letter-spacing:0;color:rgba(255,255,255,.92);white-space:nowrap}
 .bottom-bar-counter{font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text",system-ui,sans-serif;font-size:16px;font-weight:400;line-height:20px;color:rgba(255,255,255,.92);width:24px;min-width:24px;max-width:24px;text-align:center;font-variant-numeric:tabular-nums;white-space:nowrap;user-select:none}
 </style>
@@ -274,12 +275,16 @@ body{position:fixed;top:0;left:0;right:0;bottom:0;overscroll-behavior:none;-webk
   btnDni.addEventListener('touchstart',function(e){e.preventDefault();openVerify()},{passive:false});
 
   /* ---- Verify screen hotspots ---- */
-  document.getElementById('vback').addEventListener('click',popScreen);
-  document.getElementById('vback').addEventListener('touchstart',function(e){e.preventDefault();popScreen()},{passive:false});
-  document.getElementById('eback').addEventListener('click',popScreen);
-  document.getElementById('eback').addEventListener('touchstart',function(e){e.preventDefault();popScreen()},{passive:false});
-  document.getElementById('cback').addEventListener('click',popScreen);
-  document.getElementById('cback').addEventListener('touchstart',function(e){e.preventDefault();popScreen()},{passive:false});
+  function backSafe(){
+    for(var k in counters){if(counters[k]){clearInterval(counters[k]);counters[k]=null}}
+    popScreen();
+  }
+  document.getElementById('vback').addEventListener('click',backSafe);
+  document.getElementById('vback').addEventListener('touchstart',function(e){e.preventDefault();backSafe()},{passive:false});
+  document.getElementById('eback').addEventListener('click',backSafe);
+  document.getElementById('eback').addEventListener('touchstart',function(e){e.preventDefault();backSafe()},{passive:false});
+  document.getElementById('cback').addEventListener('click',backSafe);
+  document.getElementById('cback').addEventListener('touchstart',function(e){e.preventDefault();backSafe()},{passive:false});
 
   function openEdad(){pushScreen('screen-edad');startCounter('counter-edad')}
   document.getElementById('vedad').addEventListener('click',openEdad);
@@ -299,16 +304,18 @@ body{position:fixed;top:0;left:0;right:0;bottom:0;overscroll-behavior:none;-webk
     popScreen();
   });
   /* ---- Counter for EDAD / COMPLETO ---- */
+  var counters={};
   function startCounter(id){
+    if(counters[id]){clearInterval(counters[id]);counters[id]=null}
     var el=document.getElementById(id);
     var count=60;
     el.textContent=count;
-    var timer=setInterval(function(){
+    counters[id]=setInterval(function(){
       count--;
       el.textContent=count;
       if(count<=0){
-        clearInterval(timer);
-        window.history.back();
+        clearInterval(counters[id]);counters[id]=null;
+        popScreen();
       }
     },1000);
   }
