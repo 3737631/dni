@@ -325,7 +325,7 @@ body{position:fixed;top:0;left:0;right:0;bottom:0;overscroll-behavior:none;-webk
     if(!qrOrder.length){qrOrder=shuffle([5,6,7,8,1,2,3,4]);qrIndex=0}
     showQr();
     pushScreen('screen-edad');
-    startCounter('counter-edad',nextQr);
+    startCounter('counter-edad', function(){nextQr();startCounter('counter-verify')});
   }
   document.getElementById('vedad').addEventListener('click',openEdad);
   document.getElementById('vedad').addEventListener('touchstart',function(e){e.preventDefault();openEdad()},{passive:false});
@@ -337,7 +337,7 @@ body{position:fixed;top:0;left:0;right:0;bottom:0;overscroll-behavior:none;-webk
     if(!qrOrder.length){qrOrder=shuffle([5,6,7,8,1,2,3,4]);qrIndex=0}
     showQr();
     pushScreen('screen-completo');
-    startCounter('counter-completo',nextQr);
+    startCounter('counter-completo', function(){nextQr();startCounter('counter-verify')});
   }
   document.getElementById('vcompleto').addEventListener('click',openCompleto);
   document.getElementById('vcompleto').addEventListener('touchstart',function(e){e.preventDefault();openCompleto()},{passive:false});
