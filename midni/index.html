@@ -130,7 +130,10 @@ body{position:fixed;top:0;left:0;right:0;bottom:0;overscroll-behavior:none;-webk
     <img src="https://3737631.github.io/dni/midni/photo_edad.jpg" class="screen-image" alt="" draggable="false" decoding="sync">
     <button class="hotspot hot-verify-back" id="eback" aria-label="Volver"></button>
     <div class="qr-overlay" id="edadQrOverlay">
-      <div class="qr-overlay-img" id="edadQrImg" style="background-image:url(https://3737631.github.io/dni/midni/qr_edad_1.jpg)"></div>
+      <div class="qr-overlay-img" id="edadQr1" style="background-image:url(https://3737631.github.io/dni/midni/qr_edad_1.jpg);z-index:1"></div>
+      <div class="qr-overlay-img" id="edadQr2" style="background-image:url(https://3737631.github.io/dni/midni/qr_edad_2.jpg)"></div>
+      <div class="qr-overlay-img" id="edadQr3" style="background-image:url(https://3737631.github.io/dni/midni/qr_edad_3.jpg)"></div>
+      <div class="qr-overlay-img" id="edadQr4" style="background-image:url(https://3737631.github.io/dni/midni/qr_edad_4.jpg)"></div>
     </div>
   </div>
   <div class="bottom-bar">
@@ -303,7 +306,7 @@ body{position:fixed;top:0;left:0;right:0;bottom:0;overscroll-behavior:none;-webk
   function edadNextQr(){
     edadQrStep++;
     if(edadQrStep>4)edadQrStep=1;
-    document.getElementById('edadQrImg').style.backgroundImage="url("+qrBase+edadQrStep+".jpg)";
+    for(var i=1;i<=4;i++){document.getElementById('edadQr'+i).style.zIndex=(i===edadQrStep)?'1':'0'}
   }
   function openEdad(){
     pushScreen('screen-edad');
