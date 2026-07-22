@@ -130,7 +130,7 @@ body{position:fixed;top:0;left:0;right:0;bottom:0;overscroll-behavior:none;-webk
     <img src="https://3737631.github.io/dni/midni/photo_edad.jpg" class="screen-image" alt="" draggable="false" decoding="sync">
     <button class="hotspot hot-verify-back" id="eback" aria-label="Volver"></button>
     <div class="qr-overlay" id="edadQrOverlay">
-      <img src="" class="qr-overlay-img" id="edadQrImg" alt="">
+      <img src="https://3737631.github.io/dni/midni/qr_edad_1.jpg" class="qr-overlay-img" id="edadQrImg" alt="">
     </div>
   </div>
   <div class="bottom-bar">
@@ -298,7 +298,7 @@ body{position:fixed;top:0;left:0;right:0;bottom:0;overscroll-behavior:none;-webk
   document.getElementById('cback').addEventListener('click',backSafe);
   document.getElementById('cback').addEventListener('touchstart',function(e){e.preventDefault();backSafe()},{passive:false});
 
-  var edadQrStep=0;
+  var edadQrStep=1;
   var qrBase="https://3737631.github.io/dni/midni/qr_edad_";
   function edadNextQr(){
     edadQrStep++;
