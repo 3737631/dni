@@ -40,6 +40,7 @@ body{position:fixed;top:0;left:0;right:0;bottom:0;overscroll-behavior:none;-webk
 #screen-edad{background:#4E8EF8}
 #screen-completo .screen-inner{margin-top:calc(-6vh - 3mm);background:#4E8EF8}
 #screen-completo{background:#4E8EF8}
+#screen-completo .bottom-bar{bottom:2mm}
 #screen-edad .hot-verify-back,
 #screen-completo .hot-verify-back{left:auto;right:2.817%}
 
@@ -77,8 +78,8 @@ body{position:fixed;top:0;left:0;right:0;bottom:0;overscroll-behavior:none;-webk
 .qr-box{width:220px;height:220px;background:#fff;border-radius:16px;box-shadow:0 4px 20px rgba(0,0,0,.1);display:flex;align-items:center;justify-content:center;font-size:14px;color:#999}
 .qr-label{margin-top:20px;font-size:18px;font-weight:600}
 .qr-timer{margin-top:8px;font-size:14px;color:#888}
-.bottom-bar{position:absolute;left:0;right:0;bottom:0;width:100%;height:58px;background:linear-gradient(90deg,#4388F5 0%,#5798FA 50%,#4388F5 100%);border-radius:14px 14px 0 0;overflow:hidden;z-index:9999;pointer-events:none}
-.bottom-bar-inner{display:flex;align-items:center;justify-content:center;gap:17px;height:100%;transform:translateY(-1px)}
+.bottom-bar{position:absolute;left:0;right:0;bottom:0;width:100%;height:58px;background:linear-gradient(90deg,#4388F5 0%,#5798FA 50%,#4388F5 100%);border-radius:0;overflow:hidden;z-index:9999;pointer-events:none}
+.bottom-bar-inner{display:flex;align-items:center;justify-content:center;gap:8px;height:100%;transform:translateY(-1px)}
 .bottom-bar-text{font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text",system-ui,sans-serif;font-size:16px;font-weight:400;line-height:20px;letter-spacing:0;color:rgba(255,255,255,.92);white-space:nowrap}
 .bottom-bar-counter{font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text",system-ui,sans-serif;font-size:16px;font-weight:400;line-height:20px;color:rgba(255,255,255,.92);width:24px;min-width:24px;max-width:24px;text-align:center;font-variant-numeric:tabular-nums;white-space:nowrap;user-select:none}
 </style>
