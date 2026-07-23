@@ -56,10 +56,12 @@ body{position:fixed;top:0;left:0;right:0;bottom:0;overscroll-behavior:none;-webk
 #screen-simple .screen-inner{margin-top:calc(-6vh + 2mm)}
 #screen-simple .bottom-bar{bottom:-18px}
 #screen-simple .bottom-bar-inner{transform:translateY(calc(-3px - 2mm))}
-.simple-data{position:absolute;top:56%;left:0;right:0;bottom:0;background:#fff;padding:12px 24px 56px;overflow-y:auto;-webkit-overflow-scrolling:touch;z-index:50;font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","SF Pro Display",sans-serif;touch-action:pan-y;overscroll-behavior:contain;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;text-rendering:optimizeLegibility;font-feature-settings:"ss01" 1}
+.simple-data{position:absolute;top:56%;left:0;right:0;bottom:0;background:#fff;padding:12px 24px 56px;overflow-y:auto;-webkit-overflow-scrolling:touch;z-index:50;font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","SF Pro Display",sans-serif;touch-action:pan-y;overscroll-behavior:contain;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;text-rendering:optimizeLegibility}
 .simple-data-field{margin-bottom:10px}
 .simple-data-label{display:block;font-size:13px;font-weight:600;line-height:16px;letter-spacing:-0.08px;color:#3C3C43;margin-bottom:1px}
-.simple-data-value{display:block;font-size:21px;font-weight:400;line-height:25px;letter-spacing:-0.45px;color:#0A2D73;margin:0;font-stretch:normal;font-feature-settings:"ss01" 1}
+.simple-data-value{display:block;font-size:21px;font-weight:400;line-height:25px;letter-spacing:-0.45px;color:#0A2D73;margin:0;font-stretch:normal}
+.one{display:inline-block;position:relative}
+.one::after{content:'';position:absolute;bottom:0;left:0;right:0;height:1.5px;background:#0A2D73;border-radius:0.5px}
 
 .qr-overlay{position:absolute;left:8%;top:46%;width:84%;height:36.26%;overflow:hidden;z-index:60;transform:translateZ(0)}
 .qr-overlay-img{width:100%;height:100%;object-fit:cover;position:absolute;left:0;top:0;will-change:transform}
@@ -188,7 +190,7 @@ body{position:fixed;top:0;left:0;right:0;bottom:0;overscroll-behavior:none;-webk
     <div class="simple-data">
       <div class="simple-data-field">
         <span class="simple-data-label">DNI</span>
-        <span class="simple-data-value">11171527J</span>
+        <span class="simple-data-value"><span class="one">1</span><span class="one">1</span><span class="one">1</span>7<span class="one">1</span>527J</span>
       </div>
       <div class="simple-data-field">
         <span class="simple-data-label">Apellidos</span>
@@ -209,6 +211,18 @@ body{position:fixed;top:0;left:0;right:0;bottom:0;overscroll-behavior:none;-webk
       <div class="simple-data-field">
         <span class="simple-data-label">Validez</span>
         <span class="simple-data-value">13 / 07 / 2028</span>
+      </div>
+      <div class="simple-data-field">
+        <span class="simple-data-label">Nacionalidad</span>
+        <span class="simple-data-value">ESP</span>
+      </div>
+      <div class="simple-data-field">
+        <span class="simple-data-label">Emisi&oacute;n</span>
+        <span class="simple-data-value">13 / 07 / 2023</span>
+      </div>
+      <div class="simple-data-field">
+        <span class="simple-data-label">Num soporte</span>
+        <span class="simple-data-value">CFQ171806</span>
       </div>
     </div>
   </div>
