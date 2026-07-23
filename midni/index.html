@@ -182,9 +182,6 @@ body{position:fixed;top:0;left:0;right:0;bottom:0;overscroll-behavior:none;-webk
   <div class="screen-inner">
     <img src="https://3737631.github.io/dni/midni/photo_simple.jpg" class="screen-image" alt="" draggable="false" decoding="sync">
     <button class="hotspot hot-verify-back" id="sback" aria-label="Volver"></button>
-    <div class="qr-overlay" id="sqrOverlay">
-      <img class="qr-overlay-img" id="sqrImg" alt="" decoding="sync" fetchpriority="high">
-    </div>
   </div>
   <div class="bottom-bar">
     <div class="bottom-bar-inner">
@@ -346,7 +343,6 @@ body{position:fixed;top:0;left:0;right:0;bottom:0;overscroll-behavior:none;-webk
     var src=qrBase+qrOrder[qrIndex]+".jpg";
     document.getElementById('edadQrImg').src=src;
     document.getElementById('cqrImg').src=src;
-    document.getElementById('sqrImg').src=src;
   }
   function nextQr(){
     qrIndex++;
@@ -376,8 +372,6 @@ body{position:fixed;top:0;left:0;right:0;bottom:0;overscroll-behavior:none;-webk
   document.getElementById('vcompleto').addEventListener('touchstart',function(e){e.preventDefault();openCompleto()},{passive:false});
   function openSimple(){
     if(counters['counter-verify']){clearInterval(counters['counter-verify']);counters['counter-verify']=null}
-    if(!qrOrder.length){qrOrder=shuffle([5,6,7,8,1,2,3,4]);qrIndex=0}
-    showQr();
     pushScreen('screen-simple');
     startCounter('counter-simple', function(){nextQr();startCounter('counter-verify')});
   }
