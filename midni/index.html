@@ -76,6 +76,7 @@ body{position:fixed;top:0;left:0;right:0;bottom:0;overscroll-behavior:none;-webk
 
 /* Simple screen hotspot - visible red for positioning */
 .hot-simple-completo{left:5%;top:49%;width:90%;height:7%}
+.hot-qrscan-scan{left:10%;top:70%;width:80%;height:8%}
 
 /* ===== Menu ===== */
 .menu-overlay{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.35);z-index:100;opacity:0;pointer-events:none;transition:opacity .3s ease}
@@ -181,6 +182,15 @@ body{position:fixed;top:0;left:0;right:0;bottom:0;overscroll-behavior:none;-webk
       <span class="bottom-bar-counter" id="counter-completo">60</span>
       <span class="bottom-bar-text">segundos.</span>
     </div>
+  </div>
+</div>
+
+<!-- QR SCAN SCREEN -->
+<div class="screen" id="screen-qrscan">
+  <div class="screen-inner">
+    <img src="https://3737631.github.io/dni/midni/photo_qrscan.jpg" class="screen-image" alt="" draggable="false" decoding="sync">
+    <button class="hotspot hot-verify-back" id="qrscanBack" aria-label="Volver"></button>
+    <button class="hotspot hot-qrscan-scan" id="qrscanBtn" aria-label="Escanear QR"></button>
   </div>
 </div>
 
@@ -358,8 +368,8 @@ body{position:fixed;top:0;left:0;right:0;bottom:0;overscroll-behavior:none;-webk
 
   /* ---- Hotspot: QR button -> DNI options ---- */
   var btnQr=document.getElementById('openQr');
-  btnQr.addEventListener('click',function(){pushScreen('screen-dni-choose')});
-  btnQr.addEventListener('touchstart',function(e){e.preventDefault();pushScreen('screen-dni-choose')},{passive:false});
+  btnQr.addEventListener('click',function(){pushScreen('screen-qrscan')});
+  btnQr.addEventListener('touchstart',function(e){e.preventDefault();pushScreen('screen-qrscan')},{passive:false});
 
   /* ---- Hotspot: Ver mi DNI -> Verify screen ---- */
   function openVerify(){pushScreen('screen-verify');startCounter('counter-verify')}
@@ -378,6 +388,10 @@ body{position:fixed;top:0;left:0;right:0;bottom:0;overscroll-behavior:none;-webk
   document.getElementById('eback').addEventListener('touchstart',function(e){e.preventDefault();backSafe();setTimeout(function(){nextQr();startCounter('counter-verify')},400)},{passive:false});
   document.getElementById('cback').addEventListener('click',function(){backSafe();setTimeout(function(){nextQr();startCounter('counter-verify')},400)});
   document.getElementById('cback').addEventListener('touchstart',function(e){e.preventDefault();backSafe();setTimeout(function(){nextQr();startCounter('counter-verify')},400)},{passive:false});
+  document.getElementById('qrscanBack').addEventListener('click',function(){popScreen()});
+  document.getElementById('qrscanBack').addEventListener('touchstart',function(e){e.preventDefault();popScreen()},{passive:false});
+  document.getElementById('qrscanBtn').addEventListener('click',function(){pushScreen('screen-dni-choose')});
+  document.getElementById('qrscanBtn').addEventListener('touchstart',function(e){e.preventDefault();pushScreen('screen-dni-choose')},{passive:false});
   document.getElementById('sback').addEventListener('click',function(){backSafe();setTimeout(function(){nextQr();startCounter('counter-verify')},400)});
   document.getElementById('sback').addEventListener('touchstart',function(e){e.preventDefault();backSafe();setTimeout(function(){nextQr();startCounter('counter-verify')},400)},{passive:false});
   document.getElementById('sToCompleto').addEventListener('click',function(){
