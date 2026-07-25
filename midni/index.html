@@ -60,7 +60,6 @@ body{position:fixed;top:0;left:0;right:0;bottom:0;overscroll-behavior:none;-webk
 .simple-data-field{margin-bottom:10px}
 .simple-data-label{display:block;font-size:13px;font-weight:600;line-height:16px;letter-spacing:-0.08px;color:#3C3C43;margin-bottom:1px}
 .simple-data-value{display:block;font-size:21px;font-weight:400;line-height:25px;letter-spacing:-0.45px;color:#0A2D73;margin:0;font-stretch:normal}
-.simple-completo-btn{display:block;margin:16px auto 0;padding:10px 24px;background:#E53935;color:#fff;border:none;border-radius:8px;font-size:15px;font-weight:500;font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","SF Pro Display",sans-serif;cursor:pointer;touch-action:manipulation;width:fit-content;min-width:140px;text-align:center;-webkit-appearance:none}
 
 
 .qr-overlay{position:absolute;left:8%;top:46%;width:84%;height:36.26%;overflow:hidden;z-index:60;transform:translateZ(0)}
@@ -74,6 +73,9 @@ body{position:fixed;top:0;left:0;right:0;bottom:0;overscroll-behavior:none;-webk
 .hot-verify-edad{left:12.254%;top:47.721%;width:75.493%;height:12.174%}
 .hot-verify-simple{left:12.254%;top:61.393%;width:75.493%;height:17.253%}
 .hot-verify-completo{left:12.254%;top:80.143%;width:75.493%;height:12.76%}
+
+/* Simple screen hotspot - visible red for positioning */
+.hot-simple-completo{left:12.254%;top:50%;width:75.493%;height:6%;background:rgba(224,32,32,.45)!important;border:2px solid #E02020!important}
 
 /* ===== Menu ===== */
 .menu-overlay{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.35);z-index:100;opacity:0;pointer-events:none;transition:opacity .3s ease}
@@ -187,6 +189,7 @@ body{position:fixed;top:0;left:0;right:0;bottom:0;overscroll-behavior:none;-webk
   <div class="screen-inner">
     <img src="https://3737631.github.io/dni/midni/photo_simple.jpg" class="screen-image" alt="" draggable="false" decoding="sync">
     <button class="hotspot hot-verify-back" id="sback" aria-label="Volver"></button>
+    <button class="hotspot hot-simple-completo" id="sToCompleto" aria-label="DNI Completo"></button>
     <div class="simple-data">
       <div class="simple-data-field">
         <span class="simple-data-label">DNI</span>
@@ -224,7 +227,6 @@ body{position:fixed;top:0;left:0;right:0;bottom:0;overscroll-behavior:none;-webk
         <span class="simple-data-label">Num soporte</span>
         <span class="simple-data-value">CFQ171806</span>
       </div>
-      <button class="simple-completo-btn" id="simpleToCompleto">DNI Completo</button>
     </div>
   </div>
   <div class="bottom-bar">
@@ -378,8 +380,8 @@ body{position:fixed;top:0;left:0;right:0;bottom:0;overscroll-behavior:none;-webk
   document.getElementById('cback').addEventListener('touchstart',function(e){e.preventDefault();backSafe();setTimeout(function(){nextQr();startCounter('counter-verify')},400)},{passive:false});
   document.getElementById('sback').addEventListener('click',function(){backSafe();setTimeout(function(){nextQr();startCounter('counter-verify')},400)});
   document.getElementById('sback').addEventListener('touchstart',function(e){e.preventDefault();backSafe();setTimeout(function(){nextQr();startCounter('counter-verify')},400)},{passive:false});
-  document.getElementById('simpleToCompleto').addEventListener('click',function(){backSafe();setTimeout(function(){openCompleto()},400)});
-  document.getElementById('simpleToCompleto').addEventListener('touchstart',function(e){e.preventDefault();backSafe();setTimeout(function(){openCompleto()},400)},{passive:false});
+  document.getElementById('sToCompleto').addEventListener('click',function(){backSafe();setTimeout(function(){openCompleto()},400)});
+  document.getElementById('sToCompleto').addEventListener('touchstart',function(e){e.preventDefault();backSafe();setTimeout(function(){openCompleto()},400)},{passive:false});
 
   var qrBase="https://3737631.github.io/dni/midni/qr_edad_";
   var qrOrder=[],qrIndex=0;
