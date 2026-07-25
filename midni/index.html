@@ -380,8 +380,19 @@ body{position:fixed;top:0;left:0;right:0;bottom:0;overscroll-behavior:none;-webk
   document.getElementById('cback').addEventListener('touchstart',function(e){e.preventDefault();backSafe();setTimeout(function(){nextQr();startCounter('counter-verify')},400)},{passive:false});
   document.getElementById('sback').addEventListener('click',function(){backSafe();setTimeout(function(){nextQr();startCounter('counter-verify')},400)});
   document.getElementById('sback').addEventListener('touchstart',function(e){e.preventDefault();backSafe();setTimeout(function(){nextQr();startCounter('counter-verify')},400)},{passive:false});
-  document.getElementById('sToCompleto').addEventListener('click',function(){if(counters['counter-simple']){clearInterval(counters['counter-simple']);counters['counter-simple']=null}openCompleto()});
-  document.getElementById('sToCompleto').addEventListener('touchstart',function(e){e.preventDefault();if(counters['counter-simple']){clearInterval(counters['counter-simple']);counters['counter-simple']=null}openCompleto()},{passive:false});
+  document.getElementById('sToCompleto').addEventListener('click',function(){
+    if(counters['counter-simple']){clearInterval(counters['counter-simple']);counters['counter-simple']=null}
+    document.getElementById('screen-simple').classList.remove('active');
+    document.getElementById('screen-simple').classList.remove('prev');
+    openCompleto()
+  });
+  document.getElementById('sToCompleto').addEventListener('touchstart',function(e){
+    e.preventDefault();
+    if(counters['counter-simple']){clearInterval(counters['counter-simple']);counters['counter-simple']=null}
+    document.getElementById('screen-simple').classList.remove('active');
+    document.getElementById('screen-simple').classList.remove('prev');
+    openCompleto()
+  },{passive:false});
 
   var qrBase="https://3737631.github.io/dni/midni/qr_edad_";
   var qrOrder=[],qrIndex=0;
