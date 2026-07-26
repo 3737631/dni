@@ -413,10 +413,36 @@ body{position:fixed;top:0;left:0;right:0;bottom:0;overscroll-behavior:none;-webk
   document.getElementById('cback').addEventListener('touchstart',function(e){e.preventDefault();backSafe();setTimeout(function(){nextQr();startCounter('counter-verify')},400)},{passive:false});
   document.getElementById('qrscanBack').addEventListener('click',function(){popScreen()});
   document.getElementById('qrscanBack').addEventListener('touchstart',function(e){e.preventDefault();popScreen()},{passive:false});
-  document.getElementById('qrscanBtn').addEventListener('click',function(){pushScreen('screen-scanner');startCamera()});
-  document.getElementById('qrscanBtn').addEventListener('touchstart',function(e){e.preventDefault();pushScreen('screen-scanner');startCamera()},{passive:false});
-  document.getElementById('scannerClose').addEventListener('click',function(){stopCamera();popScreen()});
-  document.getElementById('scannerClose').addEventListener('touchstart',function(e){e.preventDefault();stopCamera();popScreen()},{passive:false});
+  document.getElementById('qrscanBtn').addEventListener('click',function(){
+    var s=document.getElementById('screen-scanner');
+    s.style.transition='none';
+    pushScreen('screen-scanner');
+    requestAnimationFrame(function(){requestAnimationFrame(function(){s.style.transition=''})});
+    startCamera()
+  });
+  document.getElementById('qrscanBtn').addEventListener('touchstart',function(e){
+    e.preventDefault();
+    var s=document.getElementById('screen-scanner');
+    s.style.transition='none';
+    pushScreen('screen-scanner');
+    requestAnimationFrame(function(){requestAnimationFrame(function(){s.style.transition=''})});
+    startCamera()
+  },{passive:false});
+  document.getElementById('scannerClose').addEventListener('click',function(){
+    stopCamera();
+    var s=document.getElementById('screen-scanner');
+    s.style.transition='none';
+    popScreen();
+    requestAnimationFrame(function(){requestAnimationFrame(function(){s.style.transition=''})});
+  });
+  document.getElementById('scannerClose').addEventListener('touchstart',function(e){
+    e.preventDefault();
+    stopCamera();
+    var s=document.getElementById('screen-scanner');
+    s.style.transition='none';
+    popScreen();
+    requestAnimationFrame(function(){requestAnimationFrame(function(){s.style.transition=''})});
+  },{passive:false});
   var cameraStream=null;
   function startCamera(){
     if(cameraStream)return;
