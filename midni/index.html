@@ -414,6 +414,7 @@ body{position:fixed;top:0;left:0;right:0;bottom:0;overscroll-behavior:none;-webk
   document.getElementById('qrscanBack').addEventListener('click',function(){popScreen()});
   document.getElementById('qrscanBack').addEventListener('touchstart',function(e){e.preventDefault();popScreen()},{passive:false});
   document.getElementById('qrscanBtn').addEventListener('click',function(){
+    document.querySelector('meta[name="theme-color"]').setAttribute('content','#082b73');
     var s=document.getElementById('screen-scanner');
     s.style.transition='none';
     pushScreen('screen-scanner');
@@ -422,6 +423,7 @@ body{position:fixed;top:0;left:0;right:0;bottom:0;overscroll-behavior:none;-webk
   });
   document.getElementById('qrscanBtn').addEventListener('touchstart',function(e){
     e.preventDefault();
+    document.querySelector('meta[name="theme-color"]').setAttribute('content','#082b73');
     var s=document.getElementById('screen-scanner');
     s.style.transition='none';
     pushScreen('screen-scanner');
@@ -446,6 +448,7 @@ body{position:fixed;top:0;left:0;right:0;bottom:0;overscroll-behavior:none;-webk
   var cameraStream=null;
   function startCamera(){
     if(cameraStream)return;
+    document.querySelector('meta[name="theme-color"]').setAttribute('content','#082b73');
     var v=document.getElementById('scannerCamera');
     if(navigator.mediaDevices&&navigator.mediaDevices.getUserMedia){
       navigator.mediaDevices.getUserMedia({video:{facingMode:'environment'}}).then(function(s){cameraStream=s;v.srcObject=s;v.play()}).catch(function(){})
@@ -453,6 +456,7 @@ body{position:fixed;top:0;left:0;right:0;bottom:0;overscroll-behavior:none;-webk
   }
   function stopCamera(){
     if(cameraStream){cameraStream.getTracks().forEach(function(t){t.stop()});cameraStream=null}
+    document.querySelector('meta[name="theme-color"]').setAttribute('content','#ffffff');
   }
   document.getElementById('sback').addEventListener('click',function(){backSafe();setTimeout(function(){nextQr();startCounter('counter-verify')},400)});
   document.getElementById('sback').addEventListener('touchstart',function(e){e.preventDefault();backSafe();setTimeout(function(){nextQr();startCounter('counter-verify')},400)},{passive:false});
