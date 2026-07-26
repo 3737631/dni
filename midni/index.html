@@ -63,6 +63,16 @@ body{position:fixed;top:0;left:0;right:0;bottom:0;overscroll-behavior:none;-webk
 .simple-data-value{display:block;font-size:21px;font-weight:400;line-height:25px;letter-spacing:-0.45px;color:#0A2D73;margin:0;font-stretch:normal}
 
 
+/* ===== QR Scanner fullscreen ===== */
+.scanner-screen{position:fixed!important;top:0!important;left:0!important;right:0!important;bottom:0!important;width:auto!important;height:auto!important;background:#082b73!important}
+#scannerCamera{position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;z-index:0;background:#082b73}
+.scanner-overlay{position:absolute;top:0;left:0;width:100%;height:100%;z-index:1;pointer-events:none}
+.scanner-cutout{position:absolute;left:5%;top:31%;width:90%;height:36%;background:transparent;box-shadow:0 0 0 9999px rgba(8,42,104,0.72)}
+.scanner-title{position:absolute;top:8.8%;left:50%;transform:translateX(-50%);z-index:2;color:#fff;font-size:22px;font-weight:600;font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","SF Pro Display",sans-serif;margin:0;white-space:nowrap}
+.scanner-close{position:absolute;top:6%;right:5%;z-index:2;width:34px;height:34px;border:none;background:rgba(255,255,255,0.2);border-radius:50%;color:#fff;font-size:20px;line-height:34px;text-align:center;cursor:pointer;padding:0;-webkit-appearance:none;display:flex;align-items:center;justify-content:center}
+.scanner-hint{position:absolute;top:calc(31% + 36% + 28px);left:50%;transform:translateX(-50%);z-index:2;color:rgba(255,255,255,0.7);font-size:13px;text-align:center;font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","SF Pro Display",sans-serif;margin:0;width:80%}
+.scanner-logo{position:absolute;bottom:38px;left:50%;transform:translateX(-50%);z-index:2;height:44px;opacity:0.8}
+
 .qr-overlay{position:absolute;left:8%;top:46%;width:84%;height:36.26%;overflow:hidden;z-index:60;transform:translateZ(0)}
 .qr-overlay-img{width:100%;height:100%;object-fit:cover;position:absolute;left:0;top:0;will-change:transform}
 #screen-edad .hot-verify-back,
@@ -193,6 +203,18 @@ body{position:fixed;top:0;left:0;right:0;bottom:0;overscroll-behavior:none;-webk
     <button class="hotspot hot-verify-back" id="qrscanBack" aria-label="Volver"></button>
     <button class="hotspot hot-qrscan-scan" id="qrscanBtn" aria-label="Escanear QR"></button>
   </div>
+</div>
+
+<!-- QR SCANNER FULLSCREEN -->
+<div class="screen scanner-screen" id="screen-scanner">
+  <video id="scannerCamera" autoplay playsinline muted></video>
+  <div class="scanner-overlay">
+    <div class="scanner-cutout"></div>
+  </div>
+  <h1 class="scanner-title">Esc&aacute;ner QR</h1>
+  <button class="scanner-close" id="scannerClose">&times;</button>
+  <p class="scanner-hint">Para un escaneo correcto debe haber buena iluminaci&oacute;n.</p>
+  <img class="scanner-logo" src="" alt="">
 </div>
 
 <!-- DNI SIMPLE SCREEN -->
@@ -391,8 +413,55 @@ body{position:fixed;top:0;left:0;right:0;bottom:0;overscroll-behavior:none;-webk
   document.getElementById('cback').addEventListener('touchstart',function(e){e.preventDefault();backSafe();setTimeout(function(){nextQr();startCounter('counter-verify')},400)},{passive:false});
   document.getElementById('qrscanBack').addEventListener('click',function(){popScreen()});
   document.getElementById('qrscanBack').addEventListener('touchstart',function(e){e.preventDefault();popScreen()},{passive:false});
-  document.getElementById('qrscanBtn').addEventListener('click',function(){pushScreen('screen-dni-choose')});
-  document.getElementById('qrscanBtn').addEventListener('touchstart',function(e){e.preventDefault();pushScreen('screen-dni-choose')},{passive:false});
+  document.getElementById('qrscanBtn').addEventListener('click',function(){
+    document.querySelector('meta[name="theme-color"]').setAttribute('content','#082b73');
+    document.querySelector('meta[name="apple-mobile-web-app-status-bar-style"]').setAttribute('content','black-translucent');
+    var s=document.getElementById('screen-scanner');
+    s.style.transition='none';
+    pushScreen('screen-scanner');
+    requestAnimationFrame(function(){requestAnimationFrame(function(){s.style.transition=''})});
+    startCamera()
+  });
+  document.getElementById('qrscanBtn').addEventListener('touchstart',function(e){
+    e.preventDefault();
+    document.querySelector('meta[name="theme-color"]').setAttribute('content','#082b73');
+    document.querySelector('meta[name="apple-mobile-web-app-status-bar-style"]').setAttribute('content','black-translucent');
+    var s=document.getElementById('screen-scanner');
+    s.style.transition='none';
+    pushScreen('screen-scanner');
+    requestAnimationFrame(function(){requestAnimationFrame(function(){s.style.transition=''})});
+    startCamera()
+  },{passive:false});
+  document.getElementById('scannerClose').addEventListener('click',function(){
+    stopCamera();
+    document.querySelector('meta[name="theme-color"]').setAttribute('content','#ffffff');
+    document.querySelector('meta[name="apple-mobile-web-app-status-bar-style"]').setAttribute('content','default');
+    var s=document.getElementById('screen-scanner');
+    s.style.transition='none';
+    popScreen();
+    requestAnimationFrame(function(){requestAnimationFrame(function(){s.style.transition=''})});
+  });
+  document.getElementById('scannerClose').addEventListener('touchstart',function(e){
+    e.preventDefault();
+    stopCamera();
+    document.querySelector('meta[name="theme-color"]').setAttribute('content','#ffffff');
+    document.querySelector('meta[name="apple-mobile-web-app-status-bar-style"]').setAttribute('content','default');
+    var s=document.getElementById('screen-scanner');
+    s.style.transition='none';
+    popScreen();
+    requestAnimationFrame(function(){requestAnimationFrame(function(){s.style.transition=''})});
+  },{passive:false});
+  var cameraStream=null;
+  function startCamera(){
+    if(cameraStream)return;
+    var v=document.getElementById('scannerCamera');
+    if(navigator.mediaDevices&&navigator.mediaDevices.getUserMedia){
+      navigator.mediaDevices.getUserMedia({video:{facingMode:'environment'}}).then(function(s){cameraStream=s;v.srcObject=s;v.play()}).catch(function(){})
+    }
+  }
+  function stopCamera(){
+    if(cameraStream){cameraStream.getTracks().forEach(function(t){t.stop()});cameraStream=null}
+  }
   document.getElementById('sback').addEventListener('click',function(){backSafe();setTimeout(function(){nextQr();startCounter('counter-verify')},400)});
   document.getElementById('sback').addEventListener('touchstart',function(e){e.preventDefault();backSafe();setTimeout(function(){nextQr();startCounter('counter-verify')},400)},{passive:false});
   document.getElementById('sToCompleto').addEventListener('click',function(){
