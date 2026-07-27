@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="theme-color" content="#ffffff">
 <meta name="apple-mobile-web-app-title" content="MiDNI">
 <link rel="manifest" href="./manifest.webmanifest?v=2">
@@ -415,7 +415,6 @@ body{position:fixed;top:0;left:0;right:0;bottom:0;overscroll-behavior:none;-webk
   document.getElementById('qrscanBack').addEventListener('touchstart',function(e){e.preventDefault();popScreen()},{passive:false});
   document.getElementById('qrscanBtn').addEventListener('click',function(){
     document.querySelector('meta[name="theme-color"]').setAttribute('content','#082b73');
-    document.querySelector('meta[name="apple-mobile-web-app-status-bar-style"]').setAttribute('content','black-translucent');
     var s=document.getElementById('screen-scanner');
     s.style.transition='none';
     pushScreen('screen-scanner');
@@ -425,7 +424,6 @@ body{position:fixed;top:0;left:0;right:0;bottom:0;overscroll-behavior:none;-webk
   document.getElementById('qrscanBtn').addEventListener('touchstart',function(e){
     e.preventDefault();
     document.querySelector('meta[name="theme-color"]').setAttribute('content','#082b73');
-    document.querySelector('meta[name="apple-mobile-web-app-status-bar-style"]').setAttribute('content','black-translucent');
     var s=document.getElementById('screen-scanner');
     s.style.transition='none';
     pushScreen('screen-scanner');
@@ -435,7 +433,6 @@ body{position:fixed;top:0;left:0;right:0;bottom:0;overscroll-behavior:none;-webk
   document.getElementById('scannerClose').addEventListener('click',function(){
     stopCamera();
     document.querySelector('meta[name="theme-color"]').setAttribute('content','#ffffff');
-    document.querySelector('meta[name="apple-mobile-web-app-status-bar-style"]').setAttribute('content','default');
     var s=document.getElementById('screen-scanner');
     s.style.transition='none';
     popScreen();
@@ -445,7 +442,6 @@ body{position:fixed;top:0;left:0;right:0;bottom:0;overscroll-behavior:none;-webk
     e.preventDefault();
     stopCamera();
     document.querySelector('meta[name="theme-color"]').setAttribute('content','#ffffff');
-    document.querySelector('meta[name="apple-mobile-web-app-status-bar-style"]').setAttribute('content','default');
     var s=document.getElementById('screen-scanner');
     s.style.transition='none';
     popScreen();
